@@ -155,7 +155,7 @@ frame_descript = tk.Frame(window,
                           relief=tk.RIDGE,
                           borderwidth=5
                           )
-frame_descript.grid(row=0, column=0,
+frame_descript.grid(row=0, rowspan=4, column=0,
                     padx=10, pady=(10,0),
                     sticky=tk.N
                     )
@@ -229,8 +229,8 @@ frame_sides = tk.Frame(window,
                        relief=tk.RIDGE,
                        borderwidth=5
                        )
-frame_sides.grid(row=1,
-                 column=0,
+frame_sides.grid(row=0,
+                 column=1,
                  padx=10,
                  pady=0
                  )
@@ -280,8 +280,8 @@ frame_drift = tk.Frame(window,
                        relief=tk.RIDGE,
                        borderwidth=5
                        )
-frame_drift.grid(row=2,
-                 column=0,
+frame_drift.grid(row=1,
+                 column=1,
                  padx=10,
                  pady=0
                  )
@@ -328,8 +328,8 @@ frame_rot = tk.Frame(window,
                      relief=tk.RIDGE,
                      borderwidth=5
                      )
-frame_rot.grid(row=3,
-               column=0,
+frame_rot.grid(row=2,
+               column=1,
                padx=10,
                pady=0
                )
@@ -391,7 +391,7 @@ frame_colorselect = tk.Frame(window,
                             relief=tk.RIDGE,
                             borderwidth=5
                             )
-frame_colorselect.grid(row=0, column=1, rowspan=5, pady=(10,0))
+frame_colorselect.grid(row=0, column=2, rowspan=4, pady=(10,0))
 
 # Create label as title
 tk.Label(frame_colorselect,
@@ -444,7 +444,7 @@ frame_proceed = tk.Frame(window,
                          pady=5,
                          relief=tk.RIDGE,
                          borderwidth=5)
-frame_proceed.grid(row=4, column=0, pady=0)
+frame_proceed.grid(row=3, column=1, pady=0)
 
 tk.Label(frame_proceed,
          text='Proceed with Drawing?',
