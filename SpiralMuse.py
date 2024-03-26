@@ -400,7 +400,7 @@ tk.Label(frame_colorselect,
          height=1,     # height in lines, not pixels
          pady=5,
          font=Verd14
-         ).pack(side=tk.TOP)
+         ).grid(row=0, column=0, columnspan=2)
 
 # Add description message
 colormessage = ('Select a base (inner) color for the spiral. '
@@ -412,7 +412,7 @@ mess_colorselect = tk.Message(master=frame_colorselect,
                               width=200,
                               pady=5,
                               font=Verd10
-                              ).pack()
+                              ).grid(row=1, column=0)
 
 # Create listbox
 listbox = tk.Listbox(frame_colorselect,
@@ -431,7 +431,7 @@ for i, key in enumerate(colors.keys()):
 
 # Select the last element as default
 listbox.select_set(len(colors) - 1)   
-listbox.pack()
+listbox.grid(row=1, column=1)
 
 
 
