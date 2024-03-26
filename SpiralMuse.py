@@ -155,8 +155,11 @@ frame_descript = tk.Frame(window,
                           relief=tk.RIDGE,
                           borderwidth=5
                           )
-frame_descript.grid(row=0, rowspan=4, column=0,
-                    padx=10, pady=(10,0),
+frame_descript.grid(row=0,
+                    column=0,
+                    rowspan=2,
+                    padx=10,
+                    pady=(10,0),
                     sticky=tk.N
                     )
 
@@ -218,165 +221,143 @@ mess_descript2 = tk.Message(master=frame_descript,
 mess_descript2.grid(row=2, column=1)
 
 
-##### Sides Select Frame --------------------------
-sides = 3           # Default value
+
+##### Parameter Selection Frame ----------------------
 
 # Create frame
-frame_sides = tk.Frame(window, 
+frame_params = tk.Frame(window, 
                        bg=bgcolor2,
                        padx=10,
                        pady=5,
                        relief=tk.RIDGE,
                        borderwidth=5
                        )
-frame_sides.grid(row=0,
+frame_params.grid(row=0,
                  column=1,
                  padx=10,
-                 pady=0
+                 pady=(10,0),
+                 sticky=tk.N
                  )
 
-# Create Label as title
-tk.Label(frame_sides,
+## Sides Section
+
+sides = 3           # Default value
+
+# Sides text message
+sidestext = ('How many sides would you like for the base polygon? '
+               'Select a number from 3 to 10.'
+)
+tk.Message(master=frame_params,
+                   text=sidestext,
+                   bg=bgcolor2,
+                   width=580,
+                   padx=5,
+                   font=Verd10
+                   ).grid(row=0, columnspan=2)
+
+# Create Label
+tk.Label(frame_params,
          text='Base Polygon Sides',
          bg=bgcolor2,
          height=1,      # height in lines, not pixels
          padx=10,
          pady=5,
          font=Verd14
-         ).grid(row=0, column=0, sticky=tk.E)
-
-# Add message
-sidemessage = ('How many sides would you like for the base polygon? '
-               'Select a number from 3 to 10.'
-)
-mess1 = tk.Message(master=frame_sides,
-                   text=sidemessage,
-                   bg=bgcolor2,
-                   width=580,
-                   padx=5,
-                   font=Verd10
-                   )
-mess1.grid(row=1, columnspan=2)
+         ).grid(row=1, column=0, sticky=tk.E)
 
 # Create Entry widget
-sides_entry = tk.Entry(frame_sides,
+sides_entry = tk.Entry(frame_params,
                        width=2,
                        font=Verd12
                        )
 sides_entry.insert(0, str(sides))
-sides_entry.grid(row=0, column=1, sticky='W')
+sides_entry.grid(row=1, column=1, sticky='W')
 
 
 
-
-##### Color Drift Frame ------------------------------
+## Color Drift Section
 colordrift = 8          # Default value
 
-# Create frame
-frame_drift = tk.Frame(window,
-                       bg=bgcolor2,
-                       padx=10,
-                       pady=5,
-                       relief=tk.RIDGE,
-                       borderwidth=5
-                       )
-frame_drift.grid(row=1,
-                 column=1,
-                 padx=10,
-                 pady=0
-                 )
+# Color drift text message
+drifttext = ('Determine color stability.  Select the amount to which the spiral color '
+    'is prevented from '
+    'drifting away from the base color, where 8 represents a lot of stability '
+    'and 2 allows for a lot of drift.'
+)
+tk.Message(master=frame_params,
+            text=drifttext,
+            bg=bgcolor2,
+            width=580,
+            padx=5,
+            font=Verd10
+           ).grid(row=2, columnspan=2)
 
-# Create label as title
-tk.Label(frame_drift,
+# Create label
+tk.Label(frame_params,
          text='Color Drift',
          bg=bgcolor2,
          height=1,     # height in lines, not pixels
          padx=10,
          pady=5,
          font=Verd14
-         ).grid(row=0, column=0, sticky=tk.E)
-
-# Add message
-driftmessage = ('Determine color stability.  Select the amount to which the spiral color '
-                'is prevented from '
-                'drifting away from the base color, where 8 represents a lot of stability '
-                'and 2 allows for a lot of drift.'
-)
-mess3 = tk.Message(master=frame_drift,
-                   text=driftmessage,
-                   bg=bgcolor2,
-                   width=580,
-                   padx=5,
-                   font=Verd10)
-mess3.grid(row=1, columnspan=2)
+         ).grid(row=3, column=0, sticky=tk.E)
 
 # Create Entry
-drift_entry = tk.Entry(frame_drift, width=2, font=Verd12)
+drift_entry = tk.Entry(frame_params, width=2, font=Verd12)
 drift_entry.insert(0, str(colordrift))
-drift_entry.grid(row=0, column=1, sticky='W')
+drift_entry.grid(row=3, column=1, sticky='W')
 
 
-##### Rotation Frame ---------------------------------------
+
+## Rotation Section
 dir_of_rot = 'left'         # default value
 degree_of_rot = 1           # default value
 
-# Create frame
-frame_rot = tk.Frame(window,
-                     bg=bgcolor2,
-                     padx=10,
-                     pady=5,
-                     relief=tk.RIDGE,
-                     borderwidth=5
-                     )
-frame_rot.grid(row=2,
-               column=1,
-               padx=10,
-               pady=0
-               )
+# Rotation text message
+rottext = (
+    'Select the direction of rotation, '
+    'either \'left\' or \'right\', and '
+    'the degree of rotation, an integer '
+    'number from 1 to 20.'
+)
+tk.Message(master=frame_params,
+                      text=rottext,
+                      bg=bgcolor2,
+                      width=580,
+                      padx=5,
+                      font=Verd10
+                      ).grid(row=4, columnspan=2)
 
 # Create label as title
-tk.Label(frame_rot,
+tk.Label(frame_params,
          text='Direction of Rotation',
          bg=bgcolor2,
          height=1,      # height in lines, not in pixels
          padx=10,
          pady=5,
          font=Verd14
-         ).grid(row=0, column=0, sticky=tk.E)
-tk.Label(frame_rot,
+         ).grid(row=5, column=0, sticky=tk.E)
+tk.Label(frame_params,
          text='Degree of Rotation',
          bg=bgcolor2,
          height=1,      # height in lines, not in pixels
          padx=10,
          pady=5,
          font=Verd14
-         ).grid(row=0, column=2, sticky=tk.E)
+         ).grid(row=6, column=0, sticky=tk.E)
 
 
 # Create Direction of Rotation Entry
-dir_entry = tk.Entry(frame_rot, width=5, font=Verd12)
+dir_entry = tk.Entry(frame_params, width=5, font=Verd12)
 dir_entry.insert(0, str(dir_of_rot))
-dir_entry.grid(row=0, column=1, padx=(0,20), sticky='W')
+dir_entry.grid(row=5, column=1, padx=(0,20), sticky='W')
 
 # Create Degree of Rotation Entry
-deg_entry = tk.Entry(frame_rot, width=2, font=Verd12)
+deg_entry = tk.Entry(frame_params, width=2, font=Verd12)
 deg_entry.insert(0, str(degree_of_rot))
-deg_entry.grid(row=0, column=3, sticky='W')
+deg_entry.grid(row=6, column=1, sticky='W')
 
-# Add message
-rot_message = ('Select the direction of rotation, '
-               'either \'left\' or \'right\', and '
-               'the degree of rotation, an integer '
-               'number from 1 to 20.'
-               )
-mess_rot = tk.Message(master=frame_rot,
-                      text=rot_message,
-                      bg=bgcolor2,
-                      width=580,
-                      padx=5,
-                      font=Verd10
-                      )
-mess_rot.grid(row=1, columnspan=4)
+
 
 
 
@@ -391,7 +372,11 @@ frame_colorselect = tk.Frame(window,
                             relief=tk.RIDGE,
                             borderwidth=5
                             )
-frame_colorselect.grid(row=0, column=2, rowspan=4, pady=(10,0))
+frame_colorselect.grid(row=0,
+                       column=2,
+                       rowspan=2,
+                       pady=(10,0)
+                       )
 
 # Create label as title
 tk.Label(frame_colorselect,
@@ -444,7 +429,11 @@ frame_proceed = tk.Frame(window,
                          pady=5,
                          relief=tk.RIDGE,
                          borderwidth=5)
-frame_proceed.grid(row=3, column=1, pady=0)
+frame_proceed.grid(row=1,
+                   column=1,
+                   pady=0,
+                   sticky=tk.N
+                   )
 
 tk.Label(frame_proceed,
          text='Proceed with Drawing?',
