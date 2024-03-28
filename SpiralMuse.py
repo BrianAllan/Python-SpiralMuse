@@ -129,7 +129,7 @@ def draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot):
 
 window = tk.Tk()
 window.title('Spiral Muse - Spiral Control')
-window.geometry('900x800')
+window.geometry('1050x700')
 window.configure(bg=wincolor)
 
 # tkinter font configuration
@@ -157,9 +157,8 @@ frame_descript = tk.Frame(window,
                           )
 frame_descript.grid(row=0,
                     column=0,
-                    rowspan=2,
                     padx=10,
-                    pady=(10,0),
+                    pady=0,
                     sticky=tk.N
                     )
 
@@ -224,6 +223,8 @@ mess_descript2.grid(row=2, column=1)
 
 ##### Parameter Selection Frame ----------------------
 
+param_sel_textwidth = 560
+
 # Create frame
 frame_params = tk.Frame(window, 
                        bg=bgcolor2,
@@ -232,10 +233,10 @@ frame_params = tk.Frame(window,
                        relief=tk.RIDGE,
                        borderwidth=5
                        )
-frame_params.grid(row=0,
-                 column=1,
+frame_params.grid(row=1,
+                 column=0,
                  padx=10,
-                 pady=(10,0),
+                 pady=0,
                  sticky=tk.N
                  )
 
@@ -250,7 +251,7 @@ sidestext = ('How many sides would you like for the base polygon? '
 tk.Message(master=frame_params,
                    text=sidestext,
                    bg=bgcolor2,
-                   width=580,
+                   width=param_sel_textwidth,
                    padx=5,
                    font=Verd10
                    ).grid(row=0, columnspan=2)
@@ -287,7 +288,7 @@ drifttext = ('Determine color stability.  Select the amount to which the spiral 
 tk.Message(master=frame_params,
             text=drifttext,
             bg=bgcolor2,
-            width=580,
+            width=param_sel_textwidth,
             padx=5,
             font=Verd10
            ).grid(row=2, columnspan=2)
@@ -323,7 +324,7 @@ rottext = (
 tk.Message(master=frame_params,
                       text=rottext,
                       bg=bgcolor2,
-                      width=580,
+                      width=param_sel_textwidth,
                       padx=5,
                       font=Verd10
                       ).grid(row=4, columnspan=2)
@@ -373,19 +374,19 @@ frame_colorselect = tk.Frame(window,
                             borderwidth=5
                             )
 frame_colorselect.grid(row=0,
-                       column=2,
-                       rowspan=2,
-                       pady=(10,0)
+                       column=1,
+                       rowspan=3,
+                       pady=0
                        )
 
 # Create label as title
 tk.Label(frame_colorselect,
-         text='Base Polygon Color',
+         text='Base Polygon\nColor',
          bg=bgcolor2,
-         height=1,     # height in lines, not pixels
+         height=3,     # height in lines, not pixels
          pady=5,
          font=Verd14
-         ).grid(row=0, column=0, columnspan=2)
+         ).grid(row=0, column=0, sticky=tk.N)
 
 # Add description message
 colormessage = ('Select a base (inner) color for the spiral. '
@@ -397,7 +398,7 @@ mess_colorselect = tk.Message(master=frame_colorselect,
                               width=200,
                               pady=5,
                               font=Verd10
-                              ).grid(row=1, column=0)
+                              ).grid(row=1, column=0, sticky=tk.N)
 
 # Create listbox
 listbox = tk.Listbox(frame_colorselect,
@@ -416,7 +417,7 @@ for i, key in enumerate(colors.keys()):
 
 # Select the last element as default
 listbox.select_set(len(colors) - 1)   
-listbox.grid(row=1, column=1)
+listbox.grid(row=0, column=1, rowspan=2)
 
 
 
@@ -429,8 +430,8 @@ frame_proceed = tk.Frame(window,
                          pady=5,
                          relief=tk.RIDGE,
                          borderwidth=5)
-frame_proceed.grid(row=1,
-                   column=1,
+frame_proceed.grid(row=2,
+                   column=0,
                    pady=0,
                    sticky=tk.N
                    )
