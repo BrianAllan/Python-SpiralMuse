@@ -55,7 +55,7 @@ wincolor = 'azure2'
 
 ##### Turtle Window ##########################
 
-def draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot):
+def draw_spiral(sides, color_start, color_end, dir_of_rot, degree_of_rot):
 
     ### Turtle Configuration -------------
     turtle.colormode(255)
@@ -69,31 +69,14 @@ def draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot):
 
     ### Spiral Creation ------------------
 
-    start_r, start_g, start_b = colors[colorselect]
+    start_r, start_g, start_b = colors[color_start]
+    end_r, end_g, end_b = colors[color_end]
     color_r, color_g, color_b = start_r, start_g, start_b
 
     rangemax = 360
 
 
-    # Function for growth
-    def growth(start, rangemax, i):
-        if start < 128:
-            growthmax = (255 - start)//colordrift
-            result = i//(int(rangemax/growthmax) + 1)
-        else:
-            growthmax = start//colordrift
-            result = -1 * (i//(int(rangemax/growthmax) + 1))
-        return result
-
-    # Function for noise
-    def noise(start):
-        if start < 128:
-            noisemax = (255 - start)//colordrift
-            result = random.randint(0, noisemax)
-        else:
-            noisemax = start//colordrift
-            result = random.randint(-noisemax, 0)
-        return result
+    
 
 
     # Drawing loop
@@ -106,11 +89,11 @@ def draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot):
         else:
             t.left(360/sides + degree_of_rot)
         t.width(i*sides/200)
-        color_r = start_r + growth(start_r, rangemax, i) + noise(start_r)
-        color_g = start_g + growth(start_g, rangemax, i) + noise(start_g)
-        color_b = start_b + growth(start_b, rangemax, i) + noise(start_b)
+        color_r = start_r + int(i * (end_r - start_r)/rangemax)
+        color_g = start_g + int(i * (end_g - start_g)/rangemax)
+        color_b = start_b + int(i * (end_b - start_b)/rangemax)
         
-        #print(color_r, color_g, color_b)       # For color performance analysis
+        print(color_r, color_g, color_b)       # For color performance analysis
 
     # Draw half a leg to finish inside the spiral
     # to hide ending
@@ -129,7 +112,7 @@ def draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot):
 
 window = tk.Tk()
 window.title('Spiral Muse - Spiral Control')
-window.geometry('1050x700')
+window.geometry('1050x800')
 window.configure(bg=wincolor)
 
 # tkinter font configuration
@@ -358,6 +341,50 @@ deg_entry = tk.Entry(frame_params, width=2, font=Verd12)
 deg_entry.insert(0, str(degree_of_rot))
 deg_entry.grid(row=6, column=1, sticky='W')
 
+## Color Selection Section
+color_start = 'yellow'
+color_end = 'violet'
+
+coltext = (
+'Select the inner start color and '
+'the outer end color of the spiral.'
+)
+tk.Message(master=frame_params,
+           text=coltext,
+           bg=bgcolor2,
+           width=param_sel_textwidth,
+           padx=5,
+           font=Verd10
+).grid(row=7, columnspan=2)
+
+# Create label as title
+tk.Label(frame_params,
+         text='Inner Start Color',
+         bg=bgcolor2,
+         height=1,
+         padx=10,
+         pady=5,
+         font=Verd14
+).grid(row=8, column=0, sticky=tk.E)
+tk.Label(frame_params,
+         text='Outer End Color',
+         bg=bgcolor2,
+         height=1,
+         padx=10,
+         pady=5,
+         font=Verd14
+).grid(row=9, column=0, sticky=tk.E)
+
+# Create Start Color Entry
+start_entry = tk.Entry(frame_params, width=17, font=Verd12)
+start_entry.insert(0, str(color_start))
+start_entry.grid(row=8, column=1, padx=(0,20), sticky=tk.W)
+
+# Create End Color Entry
+end_entry = tk.Entry(frame_params, width=17, font=Verd12)
+end_entry.insert(0, str(color_end))
+end_entry.grid(row=9, column=1, padx=(0,20), sticky=tk.W)
+
 
 
 
@@ -457,6 +484,8 @@ def proceed_submit():
     global dir_of_rot
     global degree_of_rot
     global counter
+    global color_start
+    global color_end
     
 
     if counter > 0:                   # Skips clear on 1st iteration
@@ -510,16 +539,22 @@ def proceed_submit():
                         message='The Degree of Rotation is out of range.  Select again.')
         return
 
+    # Exception handing for start and end color choices
+    color_start = start_entry.get()
+    color_end = end_entry.get()
+
     mess_proceed = f'''Your Selection is...\t\t\t
 Base Color:\t{colorselect}
 Sides:\t\t{sides}
 Stability/Drift:\t{colordrift}
 Direction of Rotation:\t{dir_of_rot}
 Degree of Rotation:\t{degree_of_rot}
+Start Color:\t{color_start}
+End Color:\t{color_end}
 '''
     
     box.showinfo('', mess_proceed)
-    draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot)
+    draw_spiral(sides, color_start, color_end, dir_of_rot, degree_of_rot)
 
 ### End Proceed Function
 
