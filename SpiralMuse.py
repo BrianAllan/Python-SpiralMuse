@@ -311,6 +311,7 @@ drift_entry.grid(row=3, column=1, sticky='W')
 
 
 ## Rotation Section
+direction = tk.StringVar()         # construct string var
 dir_of_rot = 'left'         # default value
 degree_of_rot = 1           # default value
 
@@ -348,10 +349,36 @@ tk.Label(frame_params,
          ).grid(row=6, column=0, sticky=tk.E)
 
 
-# Create Direction of Rotation Entry
-dir_entry = tk.Entry(frame_params, width=5, font=Verd12)
-dir_entry.insert(0, str(dir_of_rot))
-dir_entry.grid(row=5, column=1, padx=(0,20), sticky='W')
+# Create Direction of Rotation Radio Buttons
+frame_radio = tk.Frame(frame_params, 
+                       bg=bgcolor2,
+                       padx=10,
+                       pady=0,
+                       borderwidth=0
+                       )
+radio_1 = tk.Radiobutton(frame_radio,
+                         text='Left',
+                         font=Verd12,
+                         variable = direction,
+                         value='left',
+                         bg=bgcolor2,
+                         activebackground='cyan',
+                         borderwidth=0
+                         )
+radio_2 = tk.Radiobutton(frame_radio,
+                         text='Right',
+                         font=Verd12,
+                         variable = direction,
+                         value='right',
+                         bg=bgcolor2,
+                         activebackground='cyan',
+                         borderwidth=0
+                         )
+radio_1.select()
+frame_radio.grid(row=5, column=1, sticky=tk.W)
+radio_1.pack(side=tk.LEFT)
+radio_2.pack(side=tk.RIGHT)
+
 
 # Create Degree of Rotation Entry
 deg_entry = tk.Entry(frame_params, width=2, font=Verd12)
@@ -490,8 +517,12 @@ def proceed_submit():
         return
 
     # Exception handling for direction of rotation
-    dir_of_rot = dir_entry.get()
-    if not (dir_of_rot == 'left' or dir_of_rot == 'right'):
+    dir_of_rot = direction.get()
+    if dir_of_rot == 'left':
+        radio_1.select()
+    elif dir_of_rot == 'right':
+        radio_2.select()
+    else:
         box.showwarning(title='Selections',
                         message=('The Direction of Rotation entry must be either '
                                 '\'left\' or \'right\'.  Select again.')
