@@ -259,40 +259,6 @@ sides_entry.grid(row=1, column=1, sticky='W')
 
 
 
-#### Color Drift Section
-##colordrift = 8          # Default value
-##
-### Color drift text message
-##drifttext = ('Determine color stability.  Select the amount to which the spiral color '
-##    'is prevented from '
-##    'drifting away from the base color, where 8 represents a lot of stability '
-##    'and 2 allows for a lot of drift.'
-##)
-##tk.Message(master=frame_params,
-##            text=drifttext,
-##            bg=bgcolor2,
-##            width=param_sel_textwidth,
-##            padx=5,
-##            font=Verd10
-##           ).grid(row=2, columnspan=2)
-##
-### Create label
-##tk.Label(frame_params,
-##         text='Color Drift',
-##         bg=bgcolor2,
-##         height=1,     # height in lines, not pixels
-##         padx=10,
-##         pady=5,
-##         font=Verd14
-##         ).grid(row=3, column=0, sticky=tk.E)
-##
-### Create Entry
-##drift_entry = tk.Entry(frame_params, width=2, font=Verd12)
-##drift_entry.insert(0, str(colordrift))
-##drift_entry.grid(row=3, column=1, sticky='W')
-
-
-
 ## Rotation Section
 dir_of_rot = 'left'         # default value
 degree_of_rot = 1           # default value
@@ -424,6 +390,9 @@ end_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
 end_entry.insert(0, str(color_end))
 end_entry.grid(row=4, column=1, padx=(0,20), sticky=tk.W)
 
+# Create function to get End Color
+# and print it in the entry box
+
 def end_color_select():
     # Getting color
     color_end = colorstrip.get(colorstrip.curselection()).strip()
@@ -432,34 +401,12 @@ def end_color_select():
     end_entry.insert(0, str(color_end))
 
 
-
 # Create End Color Button
 tk.Button(frame_colorselect,
           text='Select',
           command=end_color_select,
           font=Verd12
           ).grid(row=4, column=0, padx=20)
-
-### Create label as title
-##tk.Label(frame_colorselect,
-##         text='Base Polygon\nColor',
-##         bg=bgcolor2,
-##         height=3,     # height in lines, not pixels
-##         pady=5,
-##         font=Verd14
-##         ).grid(row=0, column=0, sticky=tk.N)
-
-### Add description message
-##colormessage = ('Select a base (inner) color for the spiral. '
-##                'The default (highlighted in white) is the last one.'
-##                )
-##mess_colorselect = tk.Message(master=frame_colorselect,
-##                              text=colormessage,
-##                              bg=bgcolor2,
-##                              width=200,
-##                              pady=5,
-##                              font=Verd10
-##                              ).grid(row=1, column=0, sticky=tk.N)
 
 
 
@@ -552,19 +499,6 @@ def proceed_submit():
         box.showwarning('', 'The selected number of sides is out of range.  Select again.')
         return
 
-
-
-##    # Exception handling for stability/drift
-##    colordrift = drift_entry.get()
-##    if not colordrift.isdigit():
-##        box.showwarning(title='Selections',
-##                        message='The stability/drift entry must be an integer.  Select again.')
-##        return
-##    colordrift = int(colordrift)
-##    if colordrift < 2 or colordrift > 8:
-##        box.showwarning(title='Selections',
-##                        message='The stability/drift selection is out of range.  Select again.')
-##        return
 
     # Exception handling for direction of rotation
     dir_of_rot = dir_entry.get()
