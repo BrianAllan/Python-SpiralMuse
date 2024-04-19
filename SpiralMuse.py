@@ -346,7 +346,6 @@ deg_entry.grid(row=6, column=1, sticky='W')
 
 
 ##### Color Select Frame ------------------------------------
-colorselect = 'medium purple'               # Default value
 
 # Create frame
 frame_colorselect = tk.Frame(window,
@@ -358,7 +357,6 @@ frame_colorselect = tk.Frame(window,
                             )
 frame_colorselect.grid(row=0,
                        column=1,
-                       rowspan=2,
                        pady=0
                        )
 
@@ -394,17 +392,53 @@ tk.Label(frame_colorselect,
          padx=10,
          pady=5,
          font=Verd14
-).grid(row=2, column=0, sticky=tk.E)
+).grid(row=3, column=0, sticky=tk.E)
 
 # Create Start Color Entry
 start_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
 start_entry.insert(0, str(color_start))
-start_entry.grid(row=1, column=1, padx=(0,20), sticky=tk.W)
+start_entry.grid(row=2, column=1, padx=(0,20), sticky=tk.W)
+
+# Create function to get Start Color
+# and print it in the entry box
+
+def start_color_select():
+    # Getting color
+    color_start = colorstrip.get(colorstrip.curselection()).strip()
+    # Printing in entry box
+    start_entry.delete(0, tk.END)
+    start_entry.insert(0, str(color_start))
+
+
+# Create Start Color Button
+tk.Button(frame_colorselect,
+          text='Select',
+          command=start_color_select,
+          font=Verd12
+          ).grid(row=2, column=0, padx=20)
+
+
 
 # Create End Color Entry
 end_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
 end_entry.insert(0, str(color_end))
-end_entry.grid(row=2, column=1, padx=(0,20), sticky=tk.W)
+end_entry.grid(row=4, column=1, padx=(0,20), sticky=tk.W)
+
+def end_color_select():
+    # Getting color
+    color_end = colorstrip.get(colorstrip.curselection()).strip()
+    # Printing in entry box
+    end_entry.delete(0, tk.END)
+    end_entry.insert(0, str(color_end))
+
+
+
+# Create End Color Button
+tk.Button(frame_colorselect,
+          text='Select',
+          command=end_color_select,
+          font=Verd12
+          ).grid(row=4, column=0, padx=20)
 
 ### Create label as title
 ##tk.Label(frame_colorselect,
@@ -462,7 +496,7 @@ for i, key in enumerate(colors.keys()):
     colorstrip.itemconfig(i, bg=key)
 
 # Select the last element as default
-colorstrip.select_set(len(colors) - 1)   
+#colorstrip.select_set(len(colors) - 1)   
 colorstrip.grid(row=0, column=0)
 
 
@@ -497,8 +531,6 @@ counter = 0
 
 def proceed_submit():
     global sides
-    global colorselect
-    #global colordrift
     global dir_of_rot
     global degree_of_rot
     global counter
@@ -519,9 +551,7 @@ def proceed_submit():
     if sides < 3 or sides > 10:
         box.showwarning('', 'The selected number of sides is out of range.  Select again.')
         return
-    
-    # Getting color
-    colorselect = colorstrip.get(colorstrip.curselection()).strip()
+
 
 
 ##    # Exception handling for stability/drift
@@ -562,7 +592,6 @@ def proceed_submit():
     color_end = end_entry.get()
 
     mess_proceed = f'''Your Selection is...\t\t\t
-Base Color:\t{colorselect}
 Sides:\t\t{sides}
 Direction of Rotation:\t{dir_of_rot}
 Degree of Rotation:\t{degree_of_rot}
