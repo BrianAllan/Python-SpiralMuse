@@ -361,8 +361,8 @@ frame_colorselect.grid(row=0,
                        )
 
 ## Color Selection Section
-color_start = 'yellow'
-color_end = 'violet'
+color_start = 'cyan'
+color_end = 'magenta'
 
 coltext = (
 'Select the inner start color and '
