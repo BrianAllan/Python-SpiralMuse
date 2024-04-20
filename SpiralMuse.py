@@ -55,7 +55,7 @@ wincolor = 'azure2'
 
 ##### Turtle Window ##########################
 
-def draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot):
+def draw_spiral(sides, color_start, color_end, dir_of_rot, degree_of_rot):
 
     ### Turtle Configuration -------------
     turtle.colormode(255)
@@ -69,31 +69,14 @@ def draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot):
 
     ### Spiral Creation ------------------
 
-    start_r, start_g, start_b = colors[colorselect]
+    start_r, start_g, start_b = colors[color_start]
+    end_r, end_g, end_b = colors[color_end]
     color_r, color_g, color_b = start_r, start_g, start_b
 
     rangemax = 360
 
 
-    # Function for growth
-    def growth(start, rangemax, i):
-        if start < 128:
-            growthmax = (255 - start)//colordrift
-            result = i//(int(rangemax/growthmax) + 1)
-        else:
-            growthmax = start//colordrift
-            result = -1 * (i//(int(rangemax/growthmax) + 1))
-        return result
-
-    # Function for noise
-    def noise(start):
-        if start < 128:
-            noisemax = (255 - start)//colordrift
-            result = random.randint(0, noisemax)
-        else:
-            noisemax = start//colordrift
-            result = random.randint(-noisemax, 0)
-        return result
+    
 
 
     # Drawing loop
@@ -106,11 +89,11 @@ def draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot):
         else:
             t.left(360/sides + degree_of_rot)
         t.width(i*sides/200)
-        color_r = start_r + growth(start_r, rangemax, i) + noise(start_r)
-        color_g = start_g + growth(start_g, rangemax, i) + noise(start_g)
-        color_b = start_b + growth(start_b, rangemax, i) + noise(start_b)
+        color_r = start_r + int(i * (end_r - start_r)/rangemax)
+        color_g = start_g + int(i * (end_g - start_g)/rangemax)
+        color_b = start_b + int(i * (end_b - start_b)/rangemax)
         
-        #print(color_r, color_g, color_b)       # For color performance analysis
+        print(color_r, color_g, color_b)       # For color performance analysis
 
     # Draw half a leg to finish inside the spiral
     # to hide ending
@@ -129,7 +112,7 @@ def draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot):
 
 window = tk.Tk()
 window.title('Spiral Muse - Spiral Control')
-window.geometry('1050x700')
+window.geometry('1050x800')
 window.configure(bg=wincolor)
 
 # tkinter font configuration
@@ -276,40 +259,6 @@ sides_entry.grid(row=1, column=1, sticky='W')
 
 
 
-## Color Drift Section
-colordrift = 8          # Default value
-
-# Color drift text message
-drifttext = ('Determine color stability.  Select the amount to which the spiral color '
-    'is prevented from '
-    'drifting away from the base color, where 8 represents a lot of stability '
-    'and 2 allows for a lot of drift.'
-)
-tk.Message(master=frame_params,
-            text=drifttext,
-            bg=bgcolor2,
-            width=param_sel_textwidth,
-            padx=5,
-            font=Verd10
-           ).grid(row=2, columnspan=2)
-
-# Create label
-tk.Label(frame_params,
-         text='Color Drift',
-         bg=bgcolor2,
-         height=1,     # height in lines, not pixels
-         padx=10,
-         pady=5,
-         font=Verd14
-         ).grid(row=3, column=0, sticky=tk.E)
-
-# Create Entry
-drift_entry = tk.Entry(frame_params, width=2, font=Verd12)
-drift_entry.insert(0, str(colordrift))
-drift_entry.grid(row=3, column=1, sticky='W')
-
-
-
 ## Rotation Section
 direction = tk.StringVar()         # construct string var
 dir_of_rot = 'left'         # default value
@@ -390,7 +339,6 @@ deg_entry.grid(row=6, column=1, sticky='W')
 
 
 ##### Color Select Frame ------------------------------------
-colorselect = 'medium purple'               # Default value
 
 # Create frame
 frame_colorselect = tk.Frame(window,
@@ -402,50 +350,128 @@ frame_colorselect = tk.Frame(window,
                             )
 frame_colorselect.grid(row=0,
                        column=1,
+                       pady=0
+                       )
+
+## Color Selection Section
+color_start = 'cyan'
+color_end = 'magenta'
+
+coltext = (
+'Select the inner start color and '
+'the outer end color of the spiral.'
+)
+tk.Message(master=frame_colorselect,
+           text=coltext,
+           bg=bgcolor2,
+           width=param_sel_textwidth,
+           padx=5,
+           font=Verd10
+).grid(row=0, columnspan=2)
+
+# Create label as title
+tk.Label(frame_colorselect,
+         text='Inner Start Color',
+         bg=bgcolor2,
+         height=1,
+         padx=10,
+         pady=5,
+         font=Verd14
+).grid(row=1, column=0, sticky=tk.E)
+tk.Label(frame_colorselect,
+         text='Outer End Color',
+         bg=bgcolor2,
+         height=1,
+         padx=10,
+         pady=5,
+         font=Verd14
+).grid(row=3, column=0, sticky=tk.E)
+
+# Create Start Color Entry
+start_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
+start_entry.insert(0, str(color_start))
+start_entry.grid(row=2, column=1, padx=(0,20), sticky=tk.W)
+
+# Create function to get Start Color
+# and print it in the entry box
+
+def start_color_select():
+    # Getting color
+    color_start = colorstrip.get(colorstrip.curselection()).strip()
+    # Printing in entry box
+    start_entry.delete(0, tk.END)
+    start_entry.insert(0, str(color_start))
+
+
+# Create Start Color Button
+tk.Button(frame_colorselect,
+          text='Select',
+          command=start_color_select,
+          font=Verd12
+          ).grid(row=2, column=0, padx=20)
+
+
+
+# Create End Color Entry
+end_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
+end_entry.insert(0, str(color_end))
+end_entry.grid(row=4, column=1, padx=(0,20), sticky=tk.W)
+
+# Create function to get End Color
+# and print it in the entry box
+
+def end_color_select():
+    # Getting color
+    color_end = colorstrip.get(colorstrip.curselection()).strip()
+    # Printing in entry box
+    end_entry.delete(0, tk.END)
+    end_entry.insert(0, str(color_end))
+
+
+# Create End Color Button
+tk.Button(frame_colorselect,
+          text='Select',
+          command=end_color_select,
+          font=Verd12
+          ).grid(row=4, column=0, padx=20)
+
+
+
+
+##### Color Strip Frame ------------------------------------
+
+frame_colorstrip = tk.Frame(window,
+                            bg=bgcolor2,
+                            padx=10,
+                            pady=5,
+                            relief=tk.RIDGE,
+                            borderwidth=5
+                            )
+frame_colorstrip.grid(row=0,
+                       column=2,
                        rowspan=3,
                        pady=0
                        )
 
-# Create label as title
-tk.Label(frame_colorselect,
-         text='Base Polygon\nColor',
-         bg=bgcolor2,
-         height=3,     # height in lines, not pixels
-         pady=5,
-         font=Verd14
-         ).grid(row=0, column=0, sticky=tk.N)
-
-# Add description message
-colormessage = ('Select a base (inner) color for the spiral. '
-                'The default (highlighted in white) is the last one.'
-                )
-mess_colorselect = tk.Message(master=frame_colorselect,
-                              text=colormessage,
-                              bg=bgcolor2,
-                              width=200,
-                              pady=5,
-                              font=Verd10
-                              ).grid(row=1, column=0, sticky=tk.N)
-
 # Create listbox
-listbox = tk.Listbox(frame_colorselect,
+colorstrip = tk.Listbox(frame_colorstrip,
                      selectbackground='ghost white',
                      height=len(colors),
                      borderwidth=5,
                      font=Verd10,
-                     # keep listbox selection from being deselected by other selections
+                     # keep listbox selection from
+                     # being deselected by other selections
                      exportselection=False    
                      )
 
 # Add items to listbox
 for i, key in enumerate(colors.keys()):
-    listbox.insert(i, '  ' + key)
-    listbox.itemconfig(i, bg=key)
+    colorstrip.insert(i, '  ' + key)
+    colorstrip.itemconfig(i, bg=key)
 
 # Select the last element as default
-listbox.select_set(len(colors) - 1)   
-listbox.grid(row=0, column=1, rowspan=2)
-
+#colorstrip.select_set(len(colors) - 1)   
+colorstrip.grid(row=0, column=0)
 
 
 
@@ -457,8 +483,8 @@ frame_proceed = tk.Frame(window,
                          pady=5,
                          relief=tk.RIDGE,
                          borderwidth=5)
-frame_proceed.grid(row=2,
-                   column=0,
+frame_proceed.grid(row=1,
+                   column=1,
                    pady=0,
                    sticky=tk.N
                    )
@@ -479,11 +505,11 @@ counter = 0
 
 def proceed_submit():
     global sides
-    global colorselect
-    global colordrift
     global dir_of_rot
     global degree_of_rot
     global counter
+    global color_start
+    global color_end
     
 
     if counter > 0:                   # Skips clear on 1st iteration
@@ -499,22 +525,7 @@ def proceed_submit():
     if sides < 3 or sides > 10:
         box.showwarning('', 'The selected number of sides is out of range.  Select again.')
         return
-    
-    # Getting color
-    colorselect = listbox.get(listbox.curselection()).strip()
 
-
-    # Exception handling for stability/drift
-    colordrift = drift_entry.get()
-    if not colordrift.isdigit():
-        box.showwarning(title='Selections',
-                        message='The stability/drift entry must be an integer.  Select again.')
-        return
-    colordrift = int(colordrift)
-    if colordrift < 2 or colordrift > 8:
-        box.showwarning(title='Selections',
-                        message='The stability/drift selection is out of range.  Select again.')
-        return
 
     # Exception handling for direction of rotation
     dir_of_rot = direction.get()
@@ -541,16 +552,20 @@ def proceed_submit():
                         message='The Degree of Rotation is out of range.  Select again.')
         return
 
+    # Exception handing for start and end color choices
+    color_start = start_entry.get()
+    color_end = end_entry.get()
+
     mess_proceed = f'''Your Selection is...\t\t\t
-Base Color:\t{colorselect}
 Sides:\t\t{sides}
-Stability/Drift:\t{colordrift}
 Direction of Rotation:\t{dir_of_rot}
 Degree of Rotation:\t{degree_of_rot}
+Start Color:\t{color_start}
+End Color:\t{color_end}
 '''
     
     box.showinfo('', mess_proceed)
-    draw_spiral(sides, colorselect, colordrift, dir_of_rot, degree_of_rot)
+    draw_spiral(sides, color_start, color_end, dir_of_rot, degree_of_rot)
 
 ### End Proceed Function
 
