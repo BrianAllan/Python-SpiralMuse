@@ -3,6 +3,7 @@ import turtle
 import tkinter as tk
 import tkinter.messagebox as box
 from tkinter.font import Font
+from tkinter import ttk
 import random
 
 
@@ -257,13 +258,18 @@ tk.Label(frame_params,
          font=Verd14
          ).grid(row=1, column=0, sticky=tk.E)
 
-# Create Entry widget
-sides_entry = tk.Entry(frame_params,
-                       width=2,
-                       font=Verd12
-                       )
-sides_entry.insert(0, str(sides))
-sides_entry.grid(row=1, column=1, sticky='W')
+# Create Sides Combobox
+n = tk.StringVar()
+
+sides_combo = ttk.Combobox(frame_params,
+                           width=2,
+                           textvariable=n,
+                           values=[i for i in range(3, 11)],
+                           font=Verd12
+                           )
+sides_combo.grid(row=1, column=1, sticky='W')
+
+sides_combo.current(0)
 
 
 
@@ -337,11 +343,19 @@ radio_1.pack(side=tk.LEFT)
 radio_2.pack(side=tk.RIGHT)
 
 
-# Create Degree of Rotation Entry
-deg_entry = tk.Entry(frame_params, width=2, font=Verd12)
-deg_entry.insert(0, str(degree_of_rot))
-deg_entry.grid(row=6, column=1, sticky='W')
+# Create Degree of Rotation Combobox
 
+deg = tk.StringVar()
+
+degree_combo = ttk.Combobox(frame_params,
+                           width=2,
+                           textvariable=deg,
+                           values=[i for i in range(1, 21)],
+                           font=Verd12
+                           )
+degree_combo.grid(row=6, column=1, sticky='W')
+
+degree_combo.current(0)
 
 
 
@@ -525,7 +539,7 @@ def proceed_submit():
     counter += 1
 
     # Exception handling for sides
-    sides = sides_entry.get()
+    sides = sides_combo.get()
     if not sides.isdigit():
         box.showwarning('', 'The sides entry must be an integer.  Select again.')
         return
@@ -549,7 +563,7 @@ def proceed_submit():
         return
 
     # Exception handling for degree of rotation
-    degree_of_rot = deg_entry.get().strip()
+    degree_of_rot = degree_combo.get()
     if not degree_of_rot.isdigit():
         box.showwarning(title='Selections',
                         message='The Degree of Rotation entry must be an integer.  Select again.')
