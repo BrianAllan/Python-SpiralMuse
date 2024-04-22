@@ -391,7 +391,9 @@ tk.Message(master=frame_colorselect,
            font=Verd10
 ).grid(row=0, columnspan=2)
 
-# Create label as title
+
+
+# Create label for Start Color
 tk.Label(frame_colorselect,
          text='Inner Start Color',
          bg=bgcolor2,
@@ -400,19 +402,32 @@ tk.Label(frame_colorselect,
          pady=5,
          font=Verd14
 ).grid(row=1, column=0, sticky=tk.E)
-tk.Label(frame_colorselect,
-         text='Outer End Color',
-         bg=bgcolor2,
-         height=1,
-         padx=10,
-         pady=5,
-         font=Verd14
-).grid(row=3, column=0, sticky=tk.E)
+
+
+# Create Radiobutton to Select from Color Strip
+start_color_source = tk.StringVar()
+
+def erase_RGB_entries():
+    start_r_entry.delete(0, tk.END)
+    start_g_entry.delete(0, tk.END)
+    start_b_entry.delete(0, tk.END)
+
+radio_start_from_strip = tk.Radiobutton(
+                        frame_colorselect,
+                        text='Select from color strip',
+                        font=Verd12,
+                        variable=start_color_source,
+                        value='strip',
+                        bg=bgcolor2,
+                        activebackground='cyan',
+                        command=erase_RGB_entries
+                        )
+radio_start_from_strip.grid(row=2, column=0, sticky=tk.W)
 
 # Create Start Color Entry
 start_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
 start_entry.insert(0, str(color_start))
-start_entry.grid(row=2, column=1, padx=(0,20), sticky=tk.W)
+start_entry.grid(row=2, column=2, padx=(0,20), sticky=tk.W)
 
 # Create function to get Start Color
 # and print it in the entry box
@@ -420,24 +435,73 @@ start_entry.grid(row=2, column=1, padx=(0,20), sticky=tk.W)
 def start_color_select():
     # Getting color
     color_start = colorstrip.get(colorstrip.curselection()).strip()
-    # Printing in entry box
-    start_entry.delete(0, tk.END)
-    start_entry.insert(0, str(color_start))
 
+    if start_color_source.get() == 'strip':
+        # Printing in entry box
+        start_entry.delete(0, tk.END)
+        start_entry.insert(0, str(color_start))
+        # Printing in RGB entry boxes
+        start_r_entry.delete(0, tk.END)
+        start_r_entry.insert(0, str(colors[color_start][0]))
+        start_g_entry.delete(0, tk.END)
+        start_g_entry.insert(0, str(colors[color_start][1]))
+        start_b_entry.delete(0, tk.END)
+        start_b_entry.insert(0, str(colors[color_start][2]))
+    else:
+        start_entry.delete(0, tk.END)
 
 # Create Start Color Button
 tk.Button(frame_colorselect,
           text='Select',
           command=start_color_select,
           font=Verd12
-          ).grid(row=2, column=0, padx=20)
+          ).grid(row=2, column=1, padx=20)
+
+def erase_start_entry():
+    start_entry.delete(0, tk.END)
+
+radio_start_from_RGB = tk.Radiobutton(
+                        frame_colorselect,
+                        text='Specify RGB values (0 - 255)',
+                        font=Verd12,
+                        variable=start_color_source,
+                        value='rgb',
+                        bg=bgcolor2,
+                        activebackground='cyan',
+                        command=erase_start_entry
+                        )
+radio_start_from_RGB.grid(row=3, column=0, sticky=tk.W)
+
+radio_start_from_strip.select()
 
 
+frame_rgb_start = tk.Frame(frame_colorselect,
+                           bg=bgcolor2)
+frame_rgb_start.grid(row=3, column=2)
+
+start_r_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12)
+start_r_entry.grid(row=0, column=0)
+start_g_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12)
+start_g_entry.grid(row=0, column=1)
+start_b_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12)
+start_b_entry.grid(row=0, column=2)
+
+
+
+# Create label for End Color
+tk.Label(frame_colorselect,
+         text='Outer End Color',
+         bg=bgcolor2,
+         height=1,
+         padx=10,
+         pady=5,
+         font=Verd14
+).grid(row=4, column=0, sticky=tk.E)
 
 # Create End Color Entry
 end_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
 end_entry.insert(0, str(color_end))
-end_entry.grid(row=4, column=1, padx=(0,20), sticky=tk.W)
+end_entry.grid(row=5, column=1, padx=(0,20), sticky=tk.W)
 
 # Create function to get End Color
 # and print it in the entry box
@@ -455,7 +519,7 @@ tk.Button(frame_colorselect,
           text='Select',
           command=end_color_select,
           font=Verd12
-          ).grid(row=4, column=0, padx=20)
+          ).grid(row=5, column=0, padx=20)
 
 
 
