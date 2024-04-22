@@ -149,7 +149,7 @@ frame_descript = tk.Frame(window,
                           )
 frame_descript.grid(row=0,
                     column=0,
-                    padx=10,
+                    padx=(10,0),
                     pady=0,
                     sticky=tk.N
                     )
@@ -213,7 +213,7 @@ mess_descript2.grid(row=2, column=1)
 
 
 
-##### Parameter Selection Frame ----------------------
+##### Sides and Rotation Frame ----------------------
 
 param_sel_textwidth = 560
 
@@ -227,7 +227,7 @@ frame_params = tk.Frame(window,
                        )
 frame_params.grid(row=1,
                  column=0,
-                 padx=10,
+                 padx=(10,0),
                  pady=0,
                  sticky=tk.N
                  )
@@ -387,21 +387,21 @@ tk.Message(master=frame_colorselect,
            text=coltext,
            bg=bgcolor2,
            width=param_sel_textwidth,
-           padx=5,
+           padx=0,
            font=Verd10
-).grid(row=0, columnspan=2)
+).grid(row=0, columnspan=3, sticky=tk.W)
 
 
 
-# Create label for Start Color
+# Start Color Label
 tk.Label(frame_colorselect,
          text='Inner Start Color',
          bg=bgcolor2,
          height=1,
-         padx=10,
+         padx=0,
          pady=5,
          font=Verd14
-).grid(row=1, column=0, sticky=tk.E)
+).grid(row=1, column=0, sticky=tk.W)
 
 
 # Create Radiobutton to Select from Color Strip
@@ -488,15 +488,15 @@ start_b_entry.grid(row=0, column=2)
 
 
 
-# Create label for End Color
+# End Color Label
 tk.Label(frame_colorselect,
          text='Outer End Color',
          bg=bgcolor2,
          height=1,
-         padx=10,
+         padx=0,
          pady=5,
          font=Verd14
-).grid(row=4, column=0, sticky=tk.E)
+).grid(row=4, column=0, sticky=tk.W)
 
 # Create End Color Entry
 end_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
