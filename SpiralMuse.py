@@ -479,12 +479,21 @@ frame_rgb_start = tk.Frame(frame_colorselect,
                            bg=bgcolor2)
 frame_rgb_start.grid(row=3, column=2)
 
+start_r_label = tk.Label(frame_rgb_start, width=1, font=Verd12,
+                         text='R', bg=bgcolor2)
+start_r_label.grid(row=0, column=0)
 start_r_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12)
-start_r_entry.grid(row=0, column=0)
+start_r_entry.grid(row=0, column=1)
+start_g_label = tk.Label(frame_rgb_start, width=1, font=Verd12,
+                         text='G', bg=bgcolor2)
+start_g_label.grid(row=0, column=2)
 start_g_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12)
-start_g_entry.grid(row=0, column=1)
+start_g_entry.grid(row=0, column=3)
+start_b_label = tk.Label(frame_rgb_start, width=1, font=Verd12,
+                         text='B', bg=bgcolor2)
+start_b_label.grid(row=0, column=4)
 start_b_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12)
-start_b_entry.grid(row=0, column=2)
+start_b_entry.grid(row=0, column=5)
 
 
 
@@ -556,7 +565,7 @@ for i, key in enumerate(colors.keys()):
     colorstrip.itemconfig(i, bg=key)
 
 # Select the last element as default
-#colorstrip.select_set(len(colors) - 1)   
+colorstrip.select_set(len(colors) - 1)   
 colorstrip.grid(row=0, column=0)
 
 
