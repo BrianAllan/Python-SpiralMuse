@@ -360,7 +360,7 @@ degree_combo.current(0)
 
 
 
-##### Color Select Frame ------------------------------------
+##### Color Select Frame ################################
 
 # Create frame
 frame_colorselect = tk.Frame(window,
@@ -375,7 +375,7 @@ frame_colorselect.grid(row=0,
                        pady=0
                        )
 
-## Color Selection Section
+### Color Selection Introduction ................
 color_start = 'cyan'
 color_end = 'magenta'
 
@@ -383,34 +383,77 @@ coltext = (
 'Select the inner start color and '
 'the outer end color of the spiral.'
 )
-tk.Message(master=frame_colorselect,
+mess_color_intro = tk.Message(master=frame_colorselect,
            text=coltext,
            bg=bgcolor2,
            width=param_sel_textwidth,
            padx=0,
            font=Verd10
-).grid(row=0, columnspan=3, sticky=tk.W)
+)
+
+
+### Create function to force widget level RGB validation ................
+
+def validate_RGB(result, insertion, text, index):
+    if result:
+        print(result, insertion, text, index)
+        if result.isdigit() and 0 <= int(result) <= 255 and int(index) < 3:
+            return True
+        else:
+            return False
+    else:
+        return True
+
+# Register the function, producing a Tcl wrapper around the Python function
+RGB_validation = window.register(validate_RGB)
+
+### .............................................
 
 
 
-# Start Color Label
-tk.Label(frame_colorselect,
+### Start Color Section ...............
+
+# Function to get Start Color
+# and print it in the entry box
+def start_color_select():
+    # Getting color
+    color_start = colorstrip.get(colorstrip.curselection()).strip()
+
+    if start_color_source.get() == 'strip':
+        # Printing in entry box
+        start_strip_entry.delete(0, tk.END)
+        start_strip_entry.insert(0, str(color_start))
+        # Printing in RGB entry boxes
+        start_r_entry.delete(0, tk.END)
+        start_r_entry.insert(0, str(colors[color_start][0]))
+        start_g_entry.delete(0, tk.END)
+        start_g_entry.insert(0, str(colors[color_start][1]))
+        start_b_entry.delete(0, tk.END)
+        start_b_entry.insert(0, str(colors[color_start][2]))
+    else:
+        start_strip_entry.delete(0, tk.END)
+
+def erase_start_strip_entry():
+    start_strip_entry.delete(0, tk.END)
+
+def erase_RGB_entries():
+    start_r_entry.delete(0, tk.END)
+    start_g_entry.delete(0, tk.END)
+    start_b_entry.delete(0, tk.END)
+
+
+# Start: Color Label
+label_inner_color = tk.Label(frame_colorselect,
          text='Inner Start Color',
          bg=bgcolor2,
          height=1,
          padx=0,
          pady=5,
          font=Verd14
-).grid(row=1, column=0, sticky=tk.W)
+)
 
-
-# Create Radiobutton to Select from Color Strip
+# Start: Radiobutton to Select from Color Strip
 start_color_source = tk.StringVar()
-
-def erase_RGB_entries():
-    start_r_entry.delete(0, tk.END)
-    start_g_entry.delete(0, tk.END)
-    start_b_entry.delete(0, tk.END)
 
 radio_start_from_strip = tk.Radiobutton(
                         frame_colorselect,
@@ -422,44 +465,23 @@ radio_start_from_strip = tk.Radiobutton(
                         activebackground='cyan',
                         command=erase_RGB_entries
                         )
-radio_start_from_strip.grid(row=2, column=0, sticky=tk.W)
 
-# Create Start Color Entry
-start_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
-start_entry.insert(0, str(color_start))
-start_entry.grid(row=2, column=2, padx=(0,20), sticky=tk.W)
+# Set radiobutton default
+radio_start_from_strip.select()
 
-# Create function to get Start Color
-# and print it in the entry box
+# Start: Color Strip Entry
+start_strip_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
+start_strip_entry.insert(0, str(color_start))
+    
 
-def start_color_select():
-    # Getting color
-    color_start = colorstrip.get(colorstrip.curselection()).strip()
+# Start: Color Select Button
+btn_start_select = tk.Button(frame_colorselect,
+                  text='Select',
+                  command=start_color_select,
+                  font=Verd12
+                  )
 
-    if start_color_source.get() == 'strip':
-        # Printing in entry box
-        start_entry.delete(0, tk.END)
-        start_entry.insert(0, str(color_start))
-        # Printing in RGB entry boxes
-        start_r_entry.delete(0, tk.END)
-        start_r_entry.insert(0, str(colors[color_start][0]))
-        start_g_entry.delete(0, tk.END)
-        start_g_entry.insert(0, str(colors[color_start][1]))
-        start_b_entry.delete(0, tk.END)
-        start_b_entry.insert(0, str(colors[color_start][2]))
-    else:
-        start_entry.delete(0, tk.END)
-
-# Create Start Color Button
-tk.Button(frame_colorselect,
-          text='Select',
-          command=start_color_select,
-          font=Verd12
-          ).grid(row=2, column=1, padx=20)
-
-def erase_start_entry():
-    start_entry.delete(0, tk.END)
-
+# Start: Radiobutton to Select from RGB values
 radio_start_from_RGB = tk.Radiobutton(
                         frame_colorselect,
                         text='Specify RGB values (0 - 255)',
@@ -468,34 +490,69 @@ radio_start_from_RGB = tk.Radiobutton(
                         value='rgb',
                         bg=bgcolor2,
                         activebackground='cyan',
-                        command=erase_start_entry
+                        command=erase_start_strip_entry
                         )
-radio_start_from_RGB.grid(row=3, column=0, sticky=tk.W)
-
-radio_start_from_strip.select()
 
 
+### Start: RGB frame for RGB entries ..................
 frame_rgb_start = tk.Frame(frame_colorselect,
                            bg=bgcolor2)
-frame_rgb_start.grid(row=3, column=2)
 
+# Creation
 start_r_label = tk.Label(frame_rgb_start, width=1, font=Verd12,
                          text='R', bg=bgcolor2)
-start_r_label.grid(row=0, column=0)
-start_r_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12)
-start_r_entry.grid(row=0, column=1)
+start_r_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12,
+                         # Callback with registered function +
+                         # Sends to the function the intended result (%P),
+                         # whether insertion or deletion (%d),
+                         # the text to insert (%S), and the index of the attempted
+                         # insertion (%i)
+                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+                         # Validates whenever a keystroke changes the widget's contents
+                         validate='key')
 start_g_label = tk.Label(frame_rgb_start, width=1, font=Verd12,
                          text='G', bg=bgcolor2)
-start_g_label.grid(row=0, column=2)
-start_g_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12)
-start_g_entry.grid(row=0, column=3)
+start_g_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12,
+                         # Callback with registered function +
+                         # Sends to the function the intended result (%P),
+                         # whether insertion or deletion (%d),
+                         # the text to insert (%S), and the index of the attempted
+                         # insertion (%i)
+                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+                         # Validates whenever a keystroke changes the widget's contents
+                         validate='key')
 start_b_label = tk.Label(frame_rgb_start, width=1, font=Verd12,
                          text='B', bg=bgcolor2)
+start_b_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12,
+                         # Callback with registered function +
+                         # Sends to the function the intended result (%P),
+                         # whether insertion or deletion (%d),
+                         # the text to insert (%S), and the index of the attempted
+                         # insertion (%i)
+                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+                         # Validates whenever a keystroke changes the widget's contents
+                         validate='key')
+
+# Placement in frame_rgb_start
+start_r_label.grid(row=0, column=0)
+start_r_entry.grid(row=0, column=1)
+start_g_label.grid(row=0, column=2)
+start_g_entry.grid(row=0, column=3)
 start_b_label.grid(row=0, column=4)
-start_b_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12)
 start_b_entry.grid(row=0, column=5)
 
+# Placement in frame_colorselect
+mess_color_intro.grid(row=0, columnspan=3, sticky=tk.W)
+label_inner_color.grid(row=1, column=0, sticky=tk.W)
+radio_start_from_strip.grid(row=2, column=0, sticky=tk.W)
+start_strip_entry.grid(row=2, column=1, padx=5, sticky=tk.W)
+btn_start_select.grid(row=2, column=2, padx=5)
+radio_start_from_RGB.grid(row=3, column=0, sticky=tk.W)
+frame_rgb_start.grid(row=3, column=1)
 
+
+
+##### End Color Section ........................................
 
 # End Color Label
 tk.Label(frame_colorselect,
@@ -508,9 +565,9 @@ tk.Label(frame_colorselect,
 ).grid(row=4, column=0, sticky=tk.W)
 
 # Create End Color Entry
-end_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
-end_entry.insert(0, str(color_end))
-end_entry.grid(row=5, column=1, padx=(0,20), sticky=tk.W)
+end_strip_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
+end_strip_entry.insert(0, str(color_end))
+end_strip_entry.grid(row=5, column=1, padx=(0,20), sticky=tk.W)
 
 # Create function to get End Color
 # and print it in the entry box
@@ -519,8 +576,8 @@ def end_color_select():
     # Getting color
     color_end = colorstrip.get(colorstrip.curselection()).strip()
     # Printing in entry box
-    end_entry.delete(0, tk.END)
-    end_entry.insert(0, str(color_end))
+    end_strip_entry.delete(0, tk.END)
+    end_strip_entry.insert(0, str(color_end))
 
 
 # Create End Color Button
@@ -648,8 +705,8 @@ def proceed_submit():
         return
 
     # Exception handing for start and end color choices
-    color_start = start_entry.get()
-    color_end = end_entry.get()
+    color_start = start_strip_entry.get()
+    color_end = end_strip_entry.get()
 
     mess_proceed = f'''Your Selection is...\t\t\t
 Sides:\t\t{sides}
