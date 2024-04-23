@@ -552,40 +552,144 @@ frame_rgb_start.grid(row=3, column=1)
 
 
 
-##### End Color Section ........................................
+### End Color Section ...............
 
-# End Color Label
-tk.Label(frame_colorselect,
+# Function to get End Color
+# and print it in the entry box
+def end_color_select():
+    # Getting color
+    color_end = colorstrip.get(colorstrip.curselection()).strip()
+
+    if end_color_source.get() == 'strip':
+        # Printing in entry box
+        end_strip_entry.delete(0, tk.END)
+        end_strip_entry.insert(0, str(color_end))
+        # Printing in RGB entry boxes
+        end_r_entry.delete(0, tk.END)
+        end_r_entry.insert(0, str(colors[color_end][0]))
+        end_g_entry.delete(0, tk.END)
+        end_g_entry.insert(0, str(colors[color_end][1]))
+        end_b_entry.delete(0, tk.END)
+        end_b_entry.insert(0, str(colors[color_end][2]))
+    else:
+        end_strip_entry.delete(0, tk.END)
+
+def erase_end_strip_entry():
+    end_strip_entry.delete(0, tk.END)
+
+def erase_RGB_entries():
+    end_r_entry.delete(0, tk.END)
+    end_g_entry.delete(0, tk.END)
+    end_b_entry.delete(0, tk.END)
+
+
+# End: Color Label
+label_outer_color = tk.Label(frame_colorselect,
          text='Outer End Color',
          bg=bgcolor2,
          height=1,
          padx=0,
          pady=5,
          font=Verd14
-).grid(row=4, column=0, sticky=tk.W)
+)
 
-# Create End Color Entry
+# End: Radiobutton to Select from Color Strip
+end_color_source = tk.StringVar()
+
+radio_end_from_strip = tk.Radiobutton(
+                        frame_colorselect,
+                        text='Select from color strip',
+                        font=Verd12,
+                        variable=end_color_source,
+                        value='strip',
+                        bg=bgcolor2,
+                        activebackground='cyan',
+                        command=erase_RGB_entries
+                        )
+
+# Set radiobutton default
+radio_end_from_strip.select()
+
+# End: Color Strip Entry
 end_strip_entry = tk.Entry(frame_colorselect, width=17, font=Verd12)
 end_strip_entry.insert(0, str(color_end))
-end_strip_entry.grid(row=5, column=1, padx=(0,20), sticky=tk.W)
+    
 
-# Create function to get End Color
-# and print it in the entry box
+# End: Color Select Button
+btn_end_select = tk.Button(frame_colorselect,
+                  text='Select',
+                  command=end_color_select,
+                  font=Verd12
+                  )
 
-def end_color_select():
-    # Getting color
-    color_end = colorstrip.get(colorstrip.curselection()).strip()
-    # Printing in entry box
-    end_strip_entry.delete(0, tk.END)
-    end_strip_entry.insert(0, str(color_end))
+# End: Radiobutton to Select from RGB values
+radio_end_from_RGB = tk.Radiobutton(
+                        frame_colorselect,
+                        text='Specify RGB values (0 - 255)',
+                        font=Verd12,
+                        variable=end_color_source,
+                        value='rgb',
+                        bg=bgcolor2,
+                        activebackground='cyan',
+                        command=erase_end_strip_entry
+                        )
 
 
-# Create End Color Button
-tk.Button(frame_colorselect,
-          text='Select',
-          command=end_color_select,
-          font=Verd12
-          ).grid(row=5, column=0, padx=20)
+### End: RGB frame for RGB entries ..................
+frame_rgb_end = tk.Frame(frame_colorselect,
+                           bg=bgcolor2)
+
+# Creation
+end_r_label = tk.Label(frame_rgb_end, width=1, font=Verd12,
+                         text='R', bg=bgcolor2)
+end_r_entry = tk.Entry(frame_rgb_end, width=3, font=Verd12,
+                         # Callback with registered function +
+                         # Sends to the function the intended result (%P),
+                         # whether insertion or deletion (%d),
+                         # the text to insert (%S), and the index of the attempted
+                         # insertion (%i)
+                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+                         # Validates whenever a keystroke changes the widget's contents
+                         validate='key')
+end_g_label = tk.Label(frame_rgb_end, width=1, font=Verd12,
+                         text='G', bg=bgcolor2)
+end_g_entry = tk.Entry(frame_rgb_end, width=3, font=Verd12,
+                         # Callback with registered function +
+                         # Sends to the function the intended result (%P),
+                         # whether insertion or deletion (%d),
+                         # the text to insert (%S), and the index of the attempted
+                         # insertion (%i)
+                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+                         # Validates whenever a keystroke changes the widget's contents
+                         validate='key')
+end_b_label = tk.Label(frame_rgb_end, width=1, font=Verd12,
+                         text='B', bg=bgcolor2)
+end_b_entry = tk.Entry(frame_rgb_end, width=3, font=Verd12,
+                         # Callback with registered function +
+                         # Sends to the function the intended result (%P),
+                         # whether insertion or deletion (%d),
+                         # the text to insert (%S), and the index of the attempted
+                         # insertion (%i)
+                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+                         # Validates whenever a keystroke changes the widget's contents
+                         validate='key')
+
+# Placement in frame_rgb_end
+end_r_label.grid(row=0, column=0)
+end_r_entry.grid(row=0, column=1)
+end_g_label.grid(row=0, column=2)
+end_g_entry.grid(row=0, column=3)
+end_b_label.grid(row=0, column=4)
+end_b_entry.grid(row=0, column=5)
+
+# Placement in frame_colorselect
+label_outer_color.grid(row=4, column=0, sticky=tk.W)
+radio_end_from_strip.grid(row=5, column=0, sticky=tk.W)
+end_strip_entry.grid(row=5, column=1, padx=5, sticky=tk.W)
+btn_end_select.grid(row=5, column=2, padx=5)
+radio_end_from_RGB.grid(row=6, column=0, sticky=tk.W)
+frame_rgb_end.grid(row=6, column=1)
+
 
 
 
