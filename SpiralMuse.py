@@ -319,28 +319,28 @@ frame_radio = tk.Frame(frame_params,
                        pady=0,
                        borderwidth=0
                        )
-radio_1 = tk.Radiobutton(frame_radio,
+radio_L = tk.Radiobutton(frame_radio,
                          text='Left',
                          font=Verd12,
-                         variable = direction,
+                         variable=direction,
                          value='left',
                          bg=bgcolor2,
                          activebackground='cyan',
                          borderwidth=0
                          )
-radio_2 = tk.Radiobutton(frame_radio,
+radio_R = tk.Radiobutton(frame_radio,
                          text='Right',
                          font=Verd12,
-                         variable = direction,
+                         variable=direction,
                          value='right',
                          bg=bgcolor2,
                          activebackground='cyan',
                          borderwidth=0
                          )
-radio_1.select()
+radio_L.select()
 frame_radio.grid(row=5, column=1, sticky=tk.W)
-radio_1.pack(side=tk.LEFT)
-radio_2.pack(side=tk.RIGHT)
+radio_L.pack(side=tk.LEFT)
+radio_R.pack(side=tk.RIGHT)
 
 
 # Create Degree of Rotation Combobox
@@ -756,7 +756,7 @@ tk.Label(frame_proceed,
 
 
 
-### Proceed Function
+### Proceed Function ###################
 counter = 0
 
 def proceed_submit():
@@ -772,43 +772,12 @@ def proceed_submit():
         turtle.Screen().clear()       # Deletes all drawings and turtles
     counter += 1
 
-    # Exception handling for sides
-    sides = sides_combo.get()
-    if not sides.isdigit():
-        box.showwarning('', 'The sides entry must be an integer.  Select again.')
-        return
-    sides = int(sides)
-    if sides < 3 or sides > 10:
-        box.showwarning('', 'The selected number of sides is out of range.  Select again.')
-        return
+    sides = int(sides_combo.get())
 
-
-    # Exception handling for direction of rotation
     dir_of_rot = direction.get()
-    if dir_of_rot == 'left':
-        radio_1.select()
-    elif dir_of_rot == 'right':
-        radio_2.select()
-    else:
-        box.showwarning(title='Selections',
-                        message=('The Direction of Rotation entry must be either '
-                                '\'left\' or \'right\'.  Select again.')
-                        )
-        return
 
-    # Exception handling for degree of rotation
-    degree_of_rot = degree_combo.get()
-    if not degree_of_rot.isdigit():
-        box.showwarning(title='Selections',
-                        message='The Degree of Rotation entry must be an integer.  Select again.')
-        return
-    degree_of_rot = int(degree_of_rot)
-    if degree_of_rot < 1 or degree_of_rot > 20:
-        box.showwarning(title='Selections',
-                        message='The Degree of Rotation is out of range.  Select again.')
-        return
+    degree_of_rot = int(degree_combo.get())
 
-    # Exception handing for start and end color choices
     color_start = start_strip_entry.get()
     color_end = end_strip_entry.get()
 
@@ -819,11 +788,11 @@ Degree of Rotation:\t{degree_of_rot}
 Start Color:\t{color_start}
 End Color:\t{color_end}
 '''
-    
     box.showinfo('', mess_proceed)
+    
     draw_spiral(sides, dir_of_rot, degree_of_rot, color_start, color_end)
 
-### End Proceed Function
+### End Proceed Function #################
 
                          
 tk.Button(frame_proceed,
