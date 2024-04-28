@@ -121,7 +121,7 @@ def draw_spiral(sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end):
 
 window = tk.Tk()
 window.title('Spiral Muse - Spiral Control')
-window.geometry('1050x800')
+window.geometry('1400x700')
 window.configure(bg=wincolor)
 
 # tkinter font configuration
@@ -149,7 +149,7 @@ frame_descript = tk.Frame(window,
                           )
 frame_descript.grid(row=0,
                     column=0,
-                    padx=(10,0),
+                    padx=0,
                     pady=0,
                     sticky=tk.N
                     )
@@ -227,7 +227,7 @@ frame_params = tk.Frame(window,
                        )
 frame_params.grid(row=1,
                  column=0,
-                 padx=(10,0),
+                 padx=0,
                  pady=0,
                  sticky=tk.N
                  )
