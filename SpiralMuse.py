@@ -147,12 +147,6 @@ frame_descript = tk.Frame(window,
                           relief=tk.RIDGE,
                           borderwidth=5
                           )
-frame_descript.grid(row=0,
-                    column=0,
-                    padx=0,
-                    pady=0,
-                    sticky=tk.N
-                    )
 
 # Create label as frame title
 tk.Label(frame_descript,
@@ -225,12 +219,7 @@ frame_params = tk.Frame(window,
                        relief=tk.RIDGE,
                        borderwidth=5
                        )
-frame_params.grid(row=1,
-                 column=0,
-                 padx=0,
-                 pady=0,
-                 sticky=tk.N
-                 )
+
 
 ## Sides Section
 
@@ -370,10 +359,7 @@ frame_colorselect = tk.Frame(window,
                             relief=tk.RIDGE,
                             borderwidth=5
                             )
-frame_colorselect.grid(row=0,
-                       column=1,
-                       pady=0
-                       )
+
 
 ### Color Selection Introduction ................
 color_start = 'cyan'
@@ -746,11 +732,7 @@ frame_colorstrip = tk.Frame(window,
                             relief=tk.RIDGE,
                             borderwidth=5
                             )
-frame_colorstrip.grid(row=0,
-                       column=2,
-                       rowspan=3,
-                       pady=0
-                       )
+
 
 # Create listbox
 colorstrip = tk.Listbox(frame_colorstrip,
@@ -782,11 +764,7 @@ frame_proceed = tk.Frame(window,
                          pady=5,
                          relief=tk.RIDGE,
                          borderwidth=5)
-frame_proceed.grid(row=1,
-                   column=1,
-                   pady=0,
-                   sticky=tk.N
-                   )
+
 
 tk.Label(frame_proceed,
          text='Proceed with Drawing?',
@@ -866,6 +844,32 @@ tk.Button(frame_proceed,
 ##### End Proceed Frame -----------------------------------------
 
 
+
+##### Main Frame Placement ------------------------------------------
+frame_descript.grid(
+    row=0, column=0,
+    padx=0, pady=0,
+    sticky=tk.N
+)
+frame_params.grid(
+    row=1, column=0,
+    padx=0, pady=0,
+    sticky=tk.N
+)
+frame_colorselect.grid(
+    row=0, column=1,
+    pady=0,
+    sticky=tk.N
+)
+frame_proceed.grid(
+    row=1, column=1,
+    pady=0,
+    sticky=tk.N
+)
+frame_colorstrip.grid(
+    row=0, column=2, rowspan=3,
+    pady=0
+)
 
 
 ##### Window mainloop ------------------------------------------
