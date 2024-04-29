@@ -414,29 +414,21 @@ RGB_validation = window.register(validate_RGB)
 
 ### Start Color Section ...............
 
-# Function to get Start Color
-# and print it in the label
-def start_color_select():
+def from_start_strip_selection():
     # Getting color
     color_start = colorstrip.get(colorstrip.curselection()).strip()
+    # Printing in label
+    start_text_var.set(color_start)
+    start_strip_label['background'] = color_start
+    # Printing in RGB entry boxes
+    start_r_entry.delete(0, tk.END)
+    start_r_entry.insert(0, str(colors[color_start][0]))
+    start_g_entry.delete(0, tk.END)
+    start_g_entry.insert(0, str(colors[color_start][1]))
+    start_b_entry.delete(0, tk.END)
+    start_b_entry.insert(0, str(colors[color_start][2]))
 
-    if start_color_source.get() == 'strip':
-        # Printing in label
-        start_text_var.set(color_start)
-        start_strip_label['background'] = color_start
-        # Printing in RGB entry boxes
-        start_r_entry.delete(0, tk.END)
-        start_r_entry.insert(0, str(colors[color_start][0]))
-        start_g_entry.delete(0, tk.END)
-        start_g_entry.insert(0, str(colors[color_start][1]))
-        start_b_entry.delete(0, tk.END)
-        start_b_entry.insert(0, str(colors[color_start][2]))
-    else:
-        start_text_var.set('')
-        start_strip_label['background'] = bgcolor2
-        
-
-def erase_start_strip_label():
+def from_start_RGB_selection():
     start_text_var.set('')
     start_strip_label['background'] = bgcolor2
     start_r_entry.delete(0, tk.END)
@@ -446,11 +438,15 @@ def erase_start_strip_label():
     start_b_entry.delete(0, tk.END)
     start_b_entry.insert(0, str(255))
 
+# Function when start Select button is pushed
+def start_color_select():
 
-def erase_RGB_entries():
-    start_r_entry.delete(0, tk.END)
-    start_g_entry.delete(0, tk.END)
-    start_b_entry.delete(0, tk.END)
+    if start_color_source.get() == 'strip':
+        from_start_strip_selection()
+
+    else:
+        from_start_RGB_selection()
+
 
 
 # Start: Color Label
@@ -474,7 +470,7 @@ radio_start_from_strip = tk.Radiobutton(
     value='strip',
     bg=bgcolor2,
     activebackground='cyan',
-    command=erase_RGB_entries
+    command=from_start_strip_selection
 )
 
 # Set radiobutton default
@@ -507,7 +503,7 @@ radio_start_from_RGB = tk.Radiobutton(
     value='rgb',
     bg=bgcolor2,
     activebackground='cyan',
-    command=erase_start_strip_label
+    command=from_start_RGB_selection
 )
 
 
@@ -586,32 +582,23 @@ frame_rgb_start.grid(row=3, column=1)
 
 
 
-
 ### End Color Section ...............
 
-# Function to get End Color
-# and print it in the label
-def end_color_select():
+def from_end_strip_selection():
     # Getting color
     color_end = colorstrip.get(colorstrip.curselection()).strip()
+    # Printing in label
+    end_text_var.set(color_end)
+    end_strip_label['background'] = color_end
+    # Printing in RGB entry boxes
+    end_r_entry.delete(0, tk.END)
+    end_r_entry.insert(0, str(colors[color_end][0]))
+    end_g_entry.delete(0, tk.END)
+    end_g_entry.insert(0, str(colors[color_end][1]))
+    end_b_entry.delete(0, tk.END)
+    end_b_entry.insert(0, str(colors[color_end][2]))
 
-    if end_color_source.get() == 'strip':
-        # Printing in label
-        end_text_var.set(color_end)
-        end_strip_label['background'] = color_end
-        # Printing in RGB entry boxes
-        end_r_entry.delete(0, tk.END)
-        end_r_entry.insert(0, str(colors[color_end][0]))
-        end_g_entry.delete(0, tk.END)
-        end_g_entry.insert(0, str(colors[color_end][1]))
-        end_b_entry.delete(0, tk.END)
-        end_b_entry.insert(0, str(colors[color_end][2]))
-    else:
-        end_text_var.set('')
-        end_strip_label['background'] = bgcolor2
-        
-
-def erase_end_strip_label():
+def from_end_RGB_selection():
     end_text_var.set('')
     end_strip_label['background'] = bgcolor2
     end_r_entry.delete(0, tk.END)
@@ -621,11 +608,15 @@ def erase_end_strip_label():
     end_b_entry.delete(0, tk.END)
     end_b_entry.insert(0, str(255))
 
+# Function when end Select button is pushed
+def end_color_select():
 
-def erase_RGB_entries():
-    end_r_entry.delete(0, tk.END)
-    end_g_entry.delete(0, tk.END)
-    end_b_entry.delete(0, tk.END)
+    if end_color_source.get() == 'strip':
+        from_end_strip_selection()
+
+    else:
+        from_end_RGB_selection()
+
 
 
 # End: Color Label
@@ -649,7 +640,7 @@ radio_end_from_strip = tk.Radiobutton(
     value='strip',
     bg=bgcolor2,
     activebackground='cyan',
-    command=erase_RGB_entries
+    command=from_end_strip_selection
 )
 
 # Set radiobutton default
@@ -682,7 +673,7 @@ radio_end_from_RGB = tk.Radiobutton(
     value='rgb',
     bg=bgcolor2,
     activebackground='cyan',
-    command=erase_end_strip_label
+    command=from_end_RGB_selection
 )
 
 
