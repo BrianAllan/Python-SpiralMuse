@@ -847,10 +847,12 @@ def proceed_submit():
         color_start = start_text_var.get()
         rgb_start = colors[color_start]
     else:
-        rgb_start = (int(start_r_var.get()),
-                     int(start_g_var.get()),
-                     int(start_b_var.get())
-                     )
+        start_r = start_r_var.get()
+        start_g = start_g_var.get()
+        start_b = start_b_var.get()
+        rgb_start = (int(start_r) if (start_r != '') else 0,
+                     int(start_g) if (start_g != '') else 0,
+                     int(start_b) if (start_b != '') else 0)
     print(rgb_start)
 
     # Get rgb_end
@@ -858,10 +860,12 @@ def proceed_submit():
         color_end = end_text_var.get()
         rgb_end = colors[color_end]
     else:
-        rgb_end = (int(end_r_var.get()),
-                     int(end_g_var.get()),
-                     int(end_b_var.get())
-                     )
+        end_r = end_r_var.get()
+        end_g = end_g_var.get()
+        end_b = end_b_var.get()
+        rgb_end = (int(end_r) if (end_r != '') else 0,
+                   int(end_g) if (end_g != '') else 0,
+                   int(end_b) if (end_b != '') else 0)
     print(rgb_end)
 
     # Create message box
