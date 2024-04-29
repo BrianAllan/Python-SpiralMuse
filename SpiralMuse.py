@@ -140,22 +140,22 @@ window.option_add('*Dialog.msg.font', 'Verdana 12')
 
 ##### Description Frame -----------------------
 
-frame_descript = tk.Frame(window,
-                          bg=bgcolor2,
-                          padx=10,
-                          pady=5,
-                          relief=tk.RIDGE,
-                          borderwidth=5
-                          )
+frame_descript = tk.Frame(
+    window, bg=bgcolor2,
+    padx=10, pady=5,
+    relief=tk.RIDGE,
+    borderwidth=5
+)
 
 # Create label as frame title
-tk.Label(frame_descript,
-         text='Spiral Muse',
-         bg=bgcolor2,
-         height=1,      # height in lines, not pixels
-         pady=5,
-         font=Verd20
-         ).grid(row=0, columnspan=2)
+tk.Label(
+    frame_descript,
+    text='Spiral Muse',
+    bg=bgcolor2,
+    height=1,      # height in lines, not pixels
+    pady=5,
+    font=Verd20
+).grid(row=0, columnspan=2)
 
 
 
@@ -166,22 +166,24 @@ description1 = (
     'pentagon, etc.) and a base color. The base polygonal shape '
     'is specified by the number of sides (3, 4, 5,...up to 10).'
 )
-mess_descript1 = tk.Message(master=frame_descript,
-                            text=description1,
-                            bg=bgcolor2,
-                            width=580,
-                            padx=5,
-                            font=Verd10
-                            )
+mess_descript1 = tk.Message(
+    master=frame_descript,
+    text=description1,
+    bg=bgcolor2,
+    width=580,
+    padx=5,
+    font=Verd10
+)
 mess_descript1.grid(row=1, columnspan=2)
 
 # Create and place spiral image
 img = tk.PhotoImage(file = 'Green_Color_Spiral.png')
 small_img = tk.PhotoImage.subsample(img, x=5, y=5)
-tk.Label(frame_descript,
-         image=small_img,
-         bg=bgcolor2
-         ).grid(row=2, column=0)
+tk.Label(
+    frame_descript,
+    image=small_img,
+    bg=bgcolor2
+).grid(row=2, column=0)
 
 
 # Create 2nd part of description
@@ -196,13 +198,14 @@ description2 = (
     'Regardless, a little amount of random variation is automatically '
     'added to the color, creating an organic look. '
 )
-mess_descript2 = tk.Message(master=frame_descript,
-                            text=description2,
-                            bg=bgcolor2,
-                            width=350,
-                            padx=5,
-                            font=Verd10
-                            )
+mess_descript2 = tk.Message(
+    master=frame_descript,
+    text=description2,
+    bg=bgcolor2,
+    width=350,
+    padx=5,
+    font=Verd10
+)
 mess_descript2.grid(row=2, column=1)
 
 
@@ -212,13 +215,12 @@ mess_descript2.grid(row=2, column=1)
 param_sel_textwidth = 560
 
 # Create frame
-frame_params = tk.Frame(window, 
-                       bg=bgcolor2,
-                       padx=10,
-                       pady=5,
-                       relief=tk.RIDGE,
-                       borderwidth=5
-                       )
+frame_params = tk.Frame(
+    window, bg=bgcolor2,
+    padx=10, pady=5,
+    relief=tk.RIDGE,
+    borderwidth=5
+)
 
 
 ## Sides Section
@@ -229,33 +231,36 @@ sides = 3           # Default value
 sidestext = ('How many sides would you like for the base polygon? '
                'Select a number from 3 to 10.'
 )
-tk.Message(master=frame_params,
-                   text=sidestext,
-                   bg=bgcolor2,
-                   width=param_sel_textwidth,
-                   padx=5,
-                   font=Verd10
-                   ).grid(row=0, columnspan=2)
+tk.Message(
+    master=frame_params,
+    text=sidestext,
+    bg=bgcolor2,
+    width=param_sel_textwidth,
+    padx=5,
+    font=Verd10
+).grid(row=0, columnspan=2)
 
 # Create Label
-tk.Label(frame_params,
-         text='Base Polygon Sides',
-         bg=bgcolor2,
-         height=1,      # height in lines, not pixels
-         padx=10,
-         pady=5,
-         font=Verd14
-         ).grid(row=1, column=0, sticky=tk.E)
+tk.Label(
+    frame_params,
+    text='Base Polygon Sides',
+    bg=bgcolor2,
+    height=1,      # height in lines, not pixels
+    padx=10,
+    pady=5,
+    font=Verd14
+).grid(row=1, column=0, sticky=tk.E)
 
 # Create Sides Combobox
 n = tk.StringVar()
 
-sides_combo = ttk.Combobox(frame_params,
-                           width=2,
-                           textvariable=n,
-                           values=[i for i in range(3, 11)],
-                           font=Verd12
-                           )
+sides_combo = ttk.Combobox(
+    frame_params,
+    width=2,
+    textvariable=n,
+    values=[i for i in range(3, 11)],
+    font=Verd12
+)
 sides_combo.grid(row=1, column=1, sticky='W')
 
 sides_combo.current(0)
@@ -274,58 +279,61 @@ rottext = (
     'the degree of rotation, an integer '
     'number from 1 to 20.'
 )
-tk.Message(master=frame_params,
-                      text=rottext,
-                      bg=bgcolor2,
-                      width=param_sel_textwidth,
-                      padx=5,
-                      font=Verd10
-                      ).grid(row=4, columnspan=2)
+tk.Message(
+    master=frame_params,
+    text=rottext,
+    bg=bgcolor2,
+    width=param_sel_textwidth,
+    padx=5,
+    font=Verd10
+).grid(row=4, columnspan=2)
 
 # Create label as title
-tk.Label(frame_params,
-         text='Direction of Rotation',
-         bg=bgcolor2,
-         height=1,      # height in lines, not in pixels
-         padx=10,
-         pady=5,
-         font=Verd14
-         ).grid(row=5, column=0, sticky=tk.E)
-tk.Label(frame_params,
-         text='Degree of Rotation',
-         bg=bgcolor2,
-         height=1,      # height in lines, not in pixels
-         padx=10,
-         pady=5,
-         font=Verd14
-         ).grid(row=6, column=0, sticky=tk.E)
+tk.Label(
+    frame_params,
+    text='Direction of Rotation',
+    bg=bgcolor2,
+    height=1,      # height in lines, not in pixels
+    padx=10, pady=5,
+    font=Verd14
+).grid(row=5, column=0, sticky=tk.E)
+tk.Label(
+    frame_params,
+    text='Degree of Rotation',
+    bg=bgcolor2,
+    height=1,      # height in lines, not in pixels
+    padx=10, pady=5,
+    font=Verd14
+).grid(row=6, column=0, sticky=tk.E)
 
 
 # Create Direction of Rotation Radio Buttons
-frame_radio = tk.Frame(frame_params, 
-                       bg=bgcolor2,
-                       padx=10,
-                       pady=0,
-                       borderwidth=0
-                       )
-radio_L = tk.Radiobutton(frame_radio,
-                         text='Left',
-                         font=Verd12,
-                         variable=direction,
-                         value='left',
-                         bg=bgcolor2,
-                         activebackground='cyan',
-                         borderwidth=0
-                         )
-radio_R = tk.Radiobutton(frame_radio,
-                         text='Right',
-                         font=Verd12,
-                         variable=direction,
-                         value='right',
-                         bg=bgcolor2,
-                         activebackground='cyan',
-                         borderwidth=0
-                         )
+frame_radio = tk.Frame(
+    frame_params, 
+    bg=bgcolor2,
+    padx=10, pady=0,
+    borderwidth=0
+)
+radio_L = tk.Radiobutton(
+    frame_radio,
+    text='Left',
+    font=Verd12,
+    variable=direction,
+    value='left',
+    bg=bgcolor2,
+    activebackground='cyan',
+    borderwidth=0
+)
+radio_R = tk.Radiobutton(
+    frame_radio,
+    text='Right',
+    font=Verd12,
+    variable=direction,
+    value='right',
+    bg=bgcolor2,
+    activebackground='cyan',
+    borderwidth=0
+)
 radio_L.select()
 frame_radio.grid(row=5, column=1, sticky=tk.W)
 radio_L.pack(side=tk.LEFT)
@@ -336,12 +344,13 @@ radio_R.pack(side=tk.RIGHT)
 
 deg = tk.StringVar()
 
-degree_combo = ttk.Combobox(frame_params,
-                           width=2,
-                           textvariable=deg,
-                           values=[i for i in range(1, 21)],
-                           font=Verd12
-                           )
+degree_combo = ttk.Combobox(
+    frame_params,
+    width=2,
+    textvariable=deg,
+    values=[i for i in range(1, 21)],
+    font=Verd12
+)
 degree_combo.grid(row=6, column=1, sticky='W')
 
 degree_combo.current(0)
@@ -352,13 +361,14 @@ degree_combo.current(0)
 ##### Color Select Frame ################################
 
 # Create frame
-frame_colorselect = tk.Frame(window,
-                            bg=bgcolor2,
-                            padx=10,
-                            pady=5,
-                            relief=tk.RIDGE,
-                            borderwidth=5
-                            )
+frame_colorselect = tk.Frame(
+    window,
+    bg=bgcolor2,
+    padx=10,
+    pady=5,
+    relief=tk.RIDGE,
+    borderwidth=5
+)
 
 
 ### Color Selection Introduction ................
@@ -369,12 +379,13 @@ coltext = (
 'Select the inner start color and '
 'the outer end color of the spiral.'
 )
-mess_color_intro = tk.Message(master=frame_colorselect,
-           text=coltext,
-           bg=bgcolor2,
-           width=param_sel_textwidth,
-           padx=0,
-           font=Verd10
+mess_color_intro = tk.Message(
+    master=frame_colorselect,
+    text=coltext,
+    bg=bgcolor2,
+    width=param_sel_textwidth,
+    padx=0,
+    font=Verd10
 )
 
 
@@ -440,28 +451,28 @@ def erase_RGB_entries():
 
 
 # Start: Color Label
-label_inner_color = tk.Label(frame_colorselect,
-         text='Inner Start Color',
-         bg=bgcolor2,
-         height=1,
-         padx=0,
-         pady=5,
-         font=Verd14
+label_inner_color = tk.Label(
+    frame_colorselect,
+    text='Inner Start Color',
+    bg=bgcolor2,
+    height=1,
+    padx=0, pady=5,
+    font=Verd14
 )
 
 # Start: Radiobutton to Select from Color Strip
 start_color_source = tk.StringVar()
 
 radio_start_from_strip = tk.Radiobutton(
-                        frame_colorselect,
-                        text='Select from color strip',
-                        font=Verd12,
-                        variable=start_color_source,
-                        value='strip',
-                        bg=bgcolor2,
-                        activebackground='cyan',
-                        command=erase_RGB_entries
-                        )
+    frame_colorselect,
+    text='Select from color strip',
+    font=Verd12,
+    variable=start_color_source,
+    value='strip',
+    bg=bgcolor2,
+    activebackground='cyan',
+    command=erase_RGB_entries
+)
 
 # Set radiobutton default
 radio_start_from_strip.select()
@@ -469,30 +480,32 @@ radio_start_from_strip.select()
 start_text_var = tk.StringVar()
 
 # Start: Color Strip Entry
-start_strip_label = tk.Label(frame_colorselect, width=17,
-                             font=Verd12, bg=color_start,
-                             textvariable=start_text_var
-                             )
+start_strip_label = tk.Label(
+    frame_colorselect, width=17,
+    font=Verd12, bg=color_start,
+    textvariable=start_text_var
+)
 start_text_var.set(color_start)
 
 # Start: Color Select Button
-btn_start_select = tk.Button(frame_colorselect,
-                  text='Select',
-                  command=start_color_select,
-                  font=Verd12
-                  )
+btn_start_select = tk.Button(
+    frame_colorselect,
+    text='Select',
+    command=start_color_select,
+    font=Verd12
+)
 
 # Start: Radiobutton to Select from RGB values
 radio_start_from_RGB = tk.Radiobutton(
-                        frame_colorselect,
-                        text='Specify RGB values (0 - 255)',
-                        font=Verd12,
-                        variable=start_color_source,
-                        value='rgb',
-                        bg=bgcolor2,
-                        activebackground='cyan',
-                        command=erase_start_strip_label
-                        )
+    frame_colorselect,
+    text='Specify RGB values (0 - 255)',
+    font=Verd12,
+    variable=start_color_source,
+    value='rgb',
+    bg=bgcolor2,
+    activebackground='cyan',
+    command=erase_start_strip_label
+)
 
 
 ### Start: RGB frame for RGB entries ..................
@@ -504,42 +517,52 @@ start_g_var = tk.StringVar()
 start_b_var = tk.StringVar()
 
 # Creation
-start_r_label = tk.Label(frame_rgb_start, width=1, font=Verd12,
-                         text='R', bg=bgcolor2)
-start_r_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12,
-                         textvariable=start_r_var,
-                         # Callback with registered function +
-                         # Sends to the function the intended result (%P),
-                         # whether insertion or deletion (%d),
-                         # the text to insert (%S), and the index of the attempted
-                         # insertion (%i)
-                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
-                         # Validates whenever a keystroke changes the widget's contents
-                         validate='key')
-start_g_label = tk.Label(frame_rgb_start, width=1, font=Verd12,
-                         text='G', bg=bgcolor2)
-start_g_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12,
-                         textvariable=start_g_var,
-                         # Callback with registered function +
-                         # Sends to the function the intended result (%P),
-                         # whether insertion or deletion (%d),
-                         # the text to insert (%S), and the index of the attempted
-                         # insertion (%i)
-                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
-                         # Validates whenever a keystroke changes the widget's contents
-                         validate='key')
-start_b_label = tk.Label(frame_rgb_start, width=1, font=Verd12,
-                         text='B', bg=bgcolor2)
-start_b_entry = tk.Entry(frame_rgb_start, width=3, font=Verd12,
-                         textvariable=start_b_var,
-                         # Callback with registered function +
-                         # Sends to the function the intended result (%P),
-                         # whether insertion or deletion (%d),
-                         # the text to insert (%S), and the index of the attempted
-                         # insertion (%i)
-                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
-                         # Validates whenever a keystroke changes the widget's contents
-                         validate='key')
+start_r_label = tk.Label(
+    frame_rgb_start, width=1, font=Verd12,
+    text='R', bg=bgcolor2
+)
+start_r_entry = tk.Entry(
+    frame_rgb_start, width=3, font=Verd12,
+    textvariable=start_r_var,
+    # Callback with registered function +
+    # Sends to the function the intended result (%P),
+    # whether insertion or deletion (%d),
+    # the text to insert (%S), and the index of the attempted
+    # insertion (%i)
+    validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+    # Validates whenever a keystroke changes the widget's contents
+    validate='key'
+)
+start_g_label = tk.Label(
+    frame_rgb_start, width=1, font=Verd12,
+    text='G', bg=bgcolor2
+)
+start_g_entry = tk.Entry(
+    frame_rgb_start, width=3, font=Verd12,
+    textvariable=start_g_var,
+    # Callback with registered function +
+    # Sends to the function the intended result (%P),
+    # whether insertion or deletion (%d),
+    # the text to insert (%S), and the index of the attempted
+    # insertion (%i)
+    validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+    # Validates whenever a keystroke changes the widget's contents
+    validate='key')
+start_b_label = tk.Label(
+    frame_rgb_start, width=1, font=Verd12,
+    text='B', bg=bgcolor2
+)
+start_b_entry = tk.Entry(
+    frame_rgb_start, width=3, font=Verd12,
+    textvariable=start_b_var,
+    # Callback with registered function +
+    # Sends to the function the intended result (%P),
+    # whether insertion or deletion (%d),
+    # the text to insert (%S), and the index of the attempted
+    # insertion (%i)
+    validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+    # Validates whenever a keystroke changes the widget's contents
+    validate='key')
 
 # Placement in frame_rgb_start
 start_r_label.grid(row=0, column=0)
@@ -600,28 +623,28 @@ def erase_RGB_entries():
 
 
 # End: Color Label
-label_outer_color = tk.Label(frame_colorselect,
-         text='Outer End Color',
-         bg=bgcolor2,
-         height=1,
-         padx=0,
-         pady=5,
-         font=Verd14
+label_outer_color = tk.Label(
+    frame_colorselect,
+    text='Outer End Color',
+    bg=bgcolor2,
+    height=1,
+    padx=0, pady=5,
+    font=Verd14
 )
 
 # End: Radiobutton to Select from Color Strip
 end_color_source = tk.StringVar()
 
 radio_end_from_strip = tk.Radiobutton(
-                        frame_colorselect,
-                        text='Select from color strip',
-                        font=Verd12,
-                        variable=end_color_source,
-                        value='strip',
-                        bg=bgcolor2,
-                        activebackground='cyan',
-                        command=erase_RGB_entries
-                        )
+    frame_colorselect,
+    text='Select from color strip',
+    font=Verd12,
+    variable=end_color_source,
+    value='strip',
+    bg=bgcolor2,
+    activebackground='cyan',
+    command=erase_RGB_entries
+)
 
 # Set radiobutton default
 radio_end_from_strip.select()
@@ -629,77 +652,93 @@ radio_end_from_strip.select()
 end_text_var = tk.StringVar()
 
 # End: Color Strip Entry
-end_strip_label = tk.Label(frame_colorselect, width=17,
-                             font=Verd12, bg=color_end,
-                             textvariable=end_text_var
-                             )
+end_strip_label = tk.Label(
+    frame_colorselect, width=17,
+    font=Verd12, bg=color_end,
+    textvariable=end_text_var
+)
 end_text_var.set(color_end)
 
 # End: Color Select Button
-btn_end_select = tk.Button(frame_colorselect,
-                  text='Select',
-                  command=end_color_select,
-                  font=Verd12
-                  )
+btn_end_select = tk.Button(
+    frame_colorselect,
+    text='Select',
+    command=end_color_select,
+    font=Verd12
+)
 
 # End: Radiobutton to Select from RGB values
 radio_end_from_RGB = tk.Radiobutton(
-                        frame_colorselect,
-                        text='Specify RGB values (0 - 255)',
-                        font=Verd12,
-                        variable=end_color_source,
-                        value='rgb',
-                        bg=bgcolor2,
-                        activebackground='cyan',
-                        command=erase_end_strip_label
-                        )
+    frame_colorselect,
+    text='Specify RGB values (0 - 255)',
+    font=Verd12,
+    variable=end_color_source,
+    value='rgb',
+    bg=bgcolor2,
+    activebackground='cyan',
+    command=erase_end_strip_label
+)
 
 
 ### End: RGB frame for RGB entries ..................
-frame_rgb_end = tk.Frame(frame_colorselect,
-                           bg=bgcolor2)
+frame_rgb_end = tk.Frame(
+    frame_colorselect,
+    bg=bgcolor2
+)
 
 end_r_var = tk.StringVar()
 end_g_var = tk.StringVar()
 end_b_var = tk.StringVar()
 
 # Creation
-end_r_label = tk.Label(frame_rgb_end, width=1, font=Verd12,
-                         text='R', bg=bgcolor2)
-end_r_entry = tk.Entry(frame_rgb_end, width=3, font=Verd12,
-                         textvariable=end_r_var,
-                         # Callback with registered function +
-                         # Sends to the function the intended result (%P),
-                         # whether insertion or deletion (%d),
-                         # the text to insert (%S), and the index of the attempted
-                         # insertion (%i)
-                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
-                         # Validates whenever a keystroke changes the widget's contents
-                         validate='key')
-end_g_label = tk.Label(frame_rgb_end, width=1, font=Verd12,
-                         text='G', bg=bgcolor2)
-end_g_entry = tk.Entry(frame_rgb_end, width=3, font=Verd12,
-                         textvariable=end_g_var,
-                         # Callback with registered function +
-                         # Sends to the function the intended result (%P),
-                         # whether insertion or deletion (%d),
-                         # the text to insert (%S), and the index of the attempted
-                         # insertion (%i)
-                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
-                         # Validates whenever a keystroke changes the widget's contents
-                         validate='key')
-end_b_label = tk.Label(frame_rgb_end, width=1, font=Verd12,
-                         text='B', bg=bgcolor2)
-end_b_entry = tk.Entry(frame_rgb_end, width=3, font=Verd12,
-                         textvariable=end_b_var,
-                         # Callback with registered function +
-                         # Sends to the function the intended result (%P),
-                         # whether insertion or deletion (%d),
-                         # the text to insert (%S), and the index of the attempted
-                         # insertion (%i)
-                         validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
-                         # Validates whenever a keystroke changes the widget's contents
-                         validate='key')
+end_r_label = tk.Label(
+    frame_rgb_end, width=1, font=Verd12,
+    text='R', bg=bgcolor2
+)
+end_r_entry = tk.Entry(
+    frame_rgb_end, width=3, font=Verd12,
+    textvariable=end_r_var,
+    # Callback with registered function +
+    # Sends to the function the intended result (%P),
+    # whether insertion or deletion (%d),
+    # the text to insert (%S), and the index of the attempted
+    # insertion (%i)
+    validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+    # Validates whenever a keystroke changes the widget's contents
+    validate='key'
+)
+end_g_label = tk.Label(
+    frame_rgb_end, width=1, font=Verd12,
+    text='G', bg=bgcolor2
+)
+end_g_entry = tk.Entry(
+    frame_rgb_end, width=3, font=Verd12,
+    textvariable=end_g_var,
+    # Callback with registered function +
+    # Sends to the function the intended result (%P),
+    # whether insertion or deletion (%d),
+    # the text to insert (%S), and the index of the attempted
+    # insertion (%i)
+    validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+    # Validates whenever a keystroke changes the widget's contents
+    validate='key'
+)
+end_b_label = tk.Label(
+    frame_rgb_end, width=1, font=Verd12,
+    text='B', bg=bgcolor2
+)
+end_b_entry = tk.Entry(
+    frame_rgb_end, width=3, font=Verd12,
+    textvariable=end_b_var,
+    # Callback with registered function +
+    # Sends to the function the intended result (%P),
+    # whether insertion or deletion (%d),
+    # the text to insert (%S), and the index of the attempted
+    # insertion (%i)
+    validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
+    # Validates whenever a keystroke changes the widget's contents
+    validate='key'
+)
 
 # Placement in frame_rgb_end
 end_r_label.grid(row=0, column=0)
@@ -725,25 +764,25 @@ frame_rgb_end.grid(row=6, column=1)
 
 ##### Color Strip Frame ------------------------------------
 
-frame_colorstrip = tk.Frame(window,
-                            bg=bgcolor2,
-                            padx=10,
-                            pady=5,
-                            relief=tk.RIDGE,
-                            borderwidth=5
-                            )
+frame_colorstrip = tk.Frame(
+    window, bg=bgcolor2,
+    padx=10, pady=5,
+    relief=tk.RIDGE,
+    borderwidth=5
+)
 
 
 # Create listbox
-colorstrip = tk.Listbox(frame_colorstrip,
-                     selectbackground='ghost white',
-                     height=len(colors),
-                     borderwidth=5,
-                     font=Verd10,
-                     # keep listbox selection from
-                     # being deselected by other selections
-                     exportselection=False    
-                     )
+colorstrip = tk.Listbox(
+    frame_colorstrip,
+    selectbackground='ghost white',
+    height=len(colors),
+    borderwidth=5,
+    font=Verd10,
+    # keep listbox selection from
+    # being deselected by other selections
+    exportselection=False    
+)
 
 # Add items to listbox
 for i, key in enumerate(colors.keys()):
@@ -758,22 +797,23 @@ colorstrip.grid(row=0, column=0)
 
 ##### Proceed Frame -----------------------------------------
 
-frame_proceed = tk.Frame(window,
-                         bg=bgcolor2,
-                         padx=10,
-                         pady=5,
-                         relief=tk.RIDGE,
-                         borderwidth=5)
+frame_proceed = tk.Frame(
+    window,
+    bg=bgcolor2,
+    padx=10, pady=5,
+    relief=tk.RIDGE,
+    borderwidth=5
+)
 
 
-tk.Label(frame_proceed,
-         text='Proceed with Drawing?',
-         bg=bgcolor2,
-         height=1,     # height in lines, not pixels
-         padx=0,
-         pady=5,
-         font=Verd14
-         ).grid(row=0, column=0)
+tk.Label(
+    frame_proceed,
+    text='Proceed with Drawing?',
+    bg=bgcolor2,
+    height=1,     # height in lines, not pixels
+    padx=0, pady=5,
+    font=Verd14
+).grid(row=0, column=0)
 
 
 
@@ -835,11 +875,11 @@ End Color:\t{color_end}
 ### End Proceed Function #################
 
                          
-tk.Button(frame_proceed,
-          text='Proceed',
-          command=proceed_submit,
-          font=Verd12
-          ).grid(row=0, column=1, padx=20)
+tk.Button(
+    frame_proceed, text='Proceed',
+    command=proceed_submit,
+    font=Verd12
+).grid(row=0, column=1, padx=20)
 
 ##### End Proceed Frame -----------------------------------------
 
