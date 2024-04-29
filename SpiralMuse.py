@@ -420,6 +420,10 @@ def from_start_strip_selection():
     # Printing in label
     start_text_var.set(color_start)
     start_strip_label['background'] = color_start
+    # Enable RGB entry boxes
+    start_r_entry.config(state='normal')
+    start_g_entry.config(state='normal')
+    start_b_entry.config(state='normal')
     # Printing in RGB entry boxes
     start_r_entry.delete(0, tk.END)
     start_r_entry.insert(0, str(colors[color_start][0]))
@@ -427,10 +431,19 @@ def from_start_strip_selection():
     start_g_entry.insert(0, str(colors[color_start][1]))
     start_b_entry.delete(0, tk.END)
     start_b_entry.insert(0, str(colors[color_start][2]))
+    # Disable RGB entry boxes
+    start_r_entry.config(state='disabled')
+    start_g_entry.config(state='disabled')
+    start_b_entry.config(state='disabled')
 
 def from_start_RGB_selection():
     start_text_var.set('')
     start_strip_label['background'] = bgcolor2
+    # Enable RGB entry boxes
+    start_r_entry.config(state='normal')
+    start_g_entry.config(state='normal')
+    start_b_entry.config(state='normal')
+    # Reinitialize values
     start_r_entry.delete(0, tk.END)
     start_r_entry.insert(0, str(255))
     start_g_entry.delete(0, tk.END)
@@ -530,7 +543,9 @@ start_r_entry = tk.Entry(
     # insertion (%i)
     validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
     # Validates whenever a keystroke changes the widget's contents
-    validate='key'
+    validate='key',
+    disabledforeground='black',
+    state='disabled'
 )
 start_g_label = tk.Label(
     frame_rgb_start, width=1, font=Verd12,
@@ -546,7 +561,10 @@ start_g_entry = tk.Entry(
     # insertion (%i)
     validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
     # Validates whenever a keystroke changes the widget's contents
-    validate='key')
+    validate='key',
+    disabledforeground='black',
+    state='disabled'
+)
 start_b_label = tk.Label(
     frame_rgb_start, width=1, font=Verd12,
     text='B', bg=bgcolor2
@@ -561,7 +579,10 @@ start_b_entry = tk.Entry(
     # insertion (%i)
     validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
     # Validates whenever a keystroke changes the widget's contents
-    validate='key')
+    validate='key',
+    disabledforeground='black',
+    state='disabled'
+)
 
 # Placement in frame_rgb_start
 start_r_label.grid(row=0, column=0)
@@ -590,6 +611,10 @@ def from_end_strip_selection():
     # Printing in label
     end_text_var.set(color_end)
     end_strip_label['background'] = color_end
+    # Enable RGB entry boxes
+    end_r_entry.config(state='normal')
+    end_g_entry.config(state='normal')
+    end_b_entry.config(state='normal')
     # Printing in RGB entry boxes
     end_r_entry.delete(0, tk.END)
     end_r_entry.insert(0, str(colors[color_end][0]))
@@ -597,10 +622,19 @@ def from_end_strip_selection():
     end_g_entry.insert(0, str(colors[color_end][1]))
     end_b_entry.delete(0, tk.END)
     end_b_entry.insert(0, str(colors[color_end][2]))
+    # Disable RGB entry boxes
+    end_r_entry.config(state='disabled')
+    end_g_entry.config(state='disabled')
+    end_b_entry.config(state='disabled')
 
 def from_end_RGB_selection():
     end_text_var.set('')
     end_strip_label['background'] = bgcolor2
+    # Enable RGB entry boxes
+    end_r_entry.config(state='normal')
+    end_g_entry.config(state='normal')
+    end_b_entry.config(state='normal')
+    # Reinitialize values
     end_r_entry.delete(0, tk.END)
     end_r_entry.insert(0, str(255))
     end_g_entry.delete(0, tk.END)
@@ -702,7 +736,9 @@ end_r_entry = tk.Entry(
     # insertion (%i)
     validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
     # Validates whenever a keystroke changes the widget's contents
-    validate='key'
+    validate='key',
+    disabledforeground='black',
+    state='disabled'
 )
 end_g_label = tk.Label(
     frame_rgb_end, width=1, font=Verd12,
@@ -718,7 +754,9 @@ end_g_entry = tk.Entry(
     # insertion (%i)
     validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
     # Validates whenever a keystroke changes the widget's contents
-    validate='key'
+    validate='key',
+    disabledforeground='black',
+    state='disabled'
 )
 end_b_label = tk.Label(
     frame_rgb_end, width=1, font=Verd12,
@@ -734,7 +772,9 @@ end_b_entry = tk.Entry(
     # insertion (%i)
     validatecommand=(RGB_validation, '%P', '%d', '%S', '%i'),
     # Validates whenever a keystroke changes the widget's contents
-    validate='key'
+    validate='key',
+    disabledforeground='black',
+    state='disabled'
 )
 
 # Placement in frame_rgb_end
