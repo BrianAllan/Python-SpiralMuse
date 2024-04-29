@@ -58,14 +58,14 @@ wincolor = 'azure2'
 
 def draw_spiral(sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end):
 
-    ### Turtle Configuration -------------
+
+    ### Turtle Window Configuration
     turtle.colormode(255)
-    turtle.setup(width=1280, height=960)
+    turtle.bgcolor("black")
+    ### Turtle Pen Setup
     t = turtle.Pen()
     t.speed(0)
-    turtle.bgcolor("black")
     t.hideturtle()
-
 
 
     ### Spiral Creation ------------------
@@ -827,11 +827,8 @@ def proceed_submit():
     global counter
     global color_start
     global color_end
-    
 
-    if counter > 0:                   # Skips clear on 1st iteration
-        turtle.Screen().clear()       # Deletes all drawings and turtles
-    counter += 1
+    # Get spiral parameters
 
     sides = int(sides_combo.get())
 
@@ -861,6 +858,8 @@ def proceed_submit():
                      )
     print(rgb_end)
 
+    # Create message box
+
     mess_proceed = f'''Your Selection is...\t\t\t
 Sides:\t\t{sides}
 Direction of Rotation:\t{dir_of_rot}
@@ -869,6 +868,16 @@ Start Color:\t{color_start}
 End Color:\t{color_end}
 '''
     box.showinfo('', mess_proceed)
+
+    # Engage turtle drawing program
+
+    if counter == 0:
+        ### Turtle Window Setup
+        turtle.setup(width=1280, height=960)
+    else:                             # Skips clear on 1st iteration
+        turtle.Screen().clear()       # Deletes all drawings and turtles
+
+    counter += 1
     
     draw_spiral(sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end)
 
