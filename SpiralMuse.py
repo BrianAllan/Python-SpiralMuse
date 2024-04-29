@@ -846,6 +846,7 @@ def proceed_submit():
     if start_color_source.get() == 'strip':
         color_start = start_text_var.get()
         rgb_start = colors[color_start]
+        start_color_source_message = f'Start Color:  {color_start}'
     else:
         start_r = start_r_var.get()
         start_g = start_g_var.get()
@@ -853,12 +854,14 @@ def proceed_submit():
         rgb_start = (int(start_r) if (start_r != '') else 0,
                      int(start_g) if (start_g != '') else 0,
                      int(start_b) if (start_b != '') else 0)
+        start_color_source_message = f'End RGB Color Values:  {rgb_start}'
     print(rgb_start)
 
     # Get rgb_end
     if end_color_source.get() == 'strip':
         color_end = end_text_var.get()
         rgb_end = colors[color_end]
+        end_color_source_message = f'End Color:  {color_end}'
     else:
         end_r = end_r_var.get()
         end_g = end_g_var.get()
@@ -866,16 +869,19 @@ def proceed_submit():
         rgb_end = (int(end_r) if (end_r != '') else 0,
                    int(end_g) if (end_g != '') else 0,
                    int(end_b) if (end_b != '') else 0)
+        end_color_source_message = f'End RGB Color Values:  {rgb_end}'
     print(rgb_end)
 
     # Create message box
 
-    mess_proceed = f'''Your Selection is...\t\t\t
-Sides:\t\t{sides}
-Direction of Rotation:\t{dir_of_rot}
-Degree of Rotation:\t{degree_of_rot}
-Start Color:\t{color_start}
-End Color:\t{color_end}
+    mess_proceed = f'''Your Selection is...\t\t
+
+Sides:  {sides}
+Direction of Rotation:  {dir_of_rot}
+Degree of Rotation:  {degree_of_rot}
+
+{start_color_source_message}
+{end_color_source_message}
 '''
     box.showinfo('', mess_proceed)
 
