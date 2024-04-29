@@ -440,11 +440,11 @@ def erase_start_strip_label():
     start_text_var.set('')
     start_strip_label['background'] = bgcolor2
     start_r_entry.delete(0, tk.END)
-    start_r_entry.insert(0, str(0))
+    start_r_entry.insert(0, str(255))
     start_g_entry.delete(0, tk.END)
-    start_g_entry.insert(0, str(0))
+    start_g_entry.insert(0, str(255))
     start_b_entry.delete(0, tk.END)
-    start_b_entry.insert(0, str(0))
+    start_b_entry.insert(0, str(255))
 
 
 def erase_RGB_entries():
@@ -615,11 +615,11 @@ def erase_end_strip_label():
     end_text_var.set('')
     end_strip_label['background'] = bgcolor2
     end_r_entry.delete(0, tk.END)
-    end_r_entry.insert(0, str(0))
+    end_r_entry.insert(0, str(255))
     end_g_entry.delete(0, tk.END)
-    end_g_entry.insert(0, str(0))
+    end_g_entry.insert(0, str(255))
     end_b_entry.delete(0, tk.END)
-    end_b_entry.insert(0, str(0))
+    end_b_entry.insert(0, str(255))
 
 
 def erase_RGB_entries():
