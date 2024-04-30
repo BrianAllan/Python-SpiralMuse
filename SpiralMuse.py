@@ -212,7 +212,7 @@ mess_descript2.grid(row=2, column=1)
 
 ##### Sides and Rotation Frame ----------------------
 
-param_sel_textwidth = 560
+mess_textwidth = 560
 
 # Create frame
 frame_params = tk.Frame(
@@ -235,7 +235,7 @@ tk.Message(
     master=frame_params,
     text=sidestext,
     bg=bgcolor2,
-    width=param_sel_textwidth,
+    width=mess_textwidth,
     padx=5,
     font=Verd10
 ).grid(row=0, columnspan=2)
@@ -283,7 +283,7 @@ tk.Message(
     master=frame_params,
     text=rottext,
     bg=bgcolor2,
-    width=param_sel_textwidth,
+    width=mess_textwidth,
     padx=5,
     font=Verd10
 ).grid(row=4, columnspan=2)
@@ -383,7 +383,7 @@ mess_color_intro = tk.Message(
     master=frame_colorselect,
     text=coltext,
     bg=bgcolor2,
-    width=param_sel_textwidth,
+    width=mess_textwidth,
     padx=0,
     font=Verd10
 )
@@ -799,6 +799,87 @@ frame_rgb_end.grid(row=6, column=1)
 
 
 
+##### Color Path Selection Frame -------------------------------------
+
+frame_colorpath = tk.Frame(
+    window, bg=bgcolor2,
+    padx=10, pady=5,
+    relief=tk.RIDGE,
+    borderwidth=5
+)
+
+label_colorpath = tk.Label(
+    frame_colorpath,
+    text='Color Path',
+    bg=bgcolor2,
+    height=1,      # height in lines, not pixels
+    padx=10,
+    pady=5,
+    font=Verd14
+)
+
+text_colorpath = (
+    'Select a path through RGB space.  '
+    'Different paths can produce different '
+    'intermediate colors.'
+)
+
+
+mess_colorpath = tk.Message(
+    master=frame_colorpath,
+    text=text_colorpath,
+    width=mess_textwidth,
+    bg=bgcolor2,
+    padx=5,
+    font=Verd10
+)
+
+
+path = tk.StringVar()
+
+radio_straightline = tk.Radiobutton(
+    frame_colorpath,
+    text='Straight Line Path',
+    font=Verd12,
+    variable=path,
+    value='straightline',
+    bg=bgcolor2,
+    activebackground='cyan'
+)
+
+radio_straightline.select()  # Set radiobutton default
+
+radio_manhattan = tk.Radiobutton(
+    frame_colorpath,
+    text='Manhattan Path',
+    font=Verd12,
+    variable=path,
+    value='manhattan',
+    bg=bgcolor2,
+    activebackground='cyan'
+)
+
+radio_randomwalk = tk.Radiobutton(
+    frame_colorpath,
+    text='Random Walk',
+    font=Verd12,
+    variable=path,
+    value='randomwalk',
+    bg=bgcolor2,
+    activebackground='cyan'
+)
+
+# Placement in frame_colorpath
+label_colorpath.grid(row=0, column=0, sticky=tk.W)
+mess_colorpath.grid(row=1, column=0)
+radio_straightline.grid(row=2, column=0, sticky=tk.W)
+radio_manhattan.grid(row=3, column=0, sticky=tk.W)
+radio_randomwalk.grid(row=4, column=0, sticky=tk.W)
+
+
+
+
+
 ##### Color Strip Frame ------------------------------------
 
 frame_colorstrip = tk.Frame(
@@ -957,8 +1038,13 @@ frame_colorselect.grid(
     pady=0,
     sticky=tk.N
 )
-frame_proceed.grid(
+frame_colorpath.grid(
     row=1, column=1,
+    pady=0,
+    sticky=tk.N
+)
+frame_proceed.grid(
+    row=2, column=1,
     pady=0,
     sticky=tk.N
 )
