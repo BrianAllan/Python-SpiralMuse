@@ -791,15 +791,34 @@ radio_straightline = tk.Radiobutton(
 
 radio_straightline.select()  # Set radiobutton default
 
-radio_manhattan = tk.Radiobutton(
+frame_Mpath = tk.Frame(
     frame_colorpath,
+    bg=bgcolor2,
+)
+
+radio_manhattan = tk.Radiobutton(
+    frame_Mpath,
     text='Manhattan Path',
     font=Verd12,
     variable=path_var,
     value='manhattan',
     bg=bgcolor2,
-    activebackground='cyan'
+    activebackground='cyan',
 )
+radio_manhattan.pack(side=tk.LEFT, padx=(0, 10))
+
+# Manhattan Path Combobox
+Mpath = tk.StringVar()
+
+combo_Mpath = ttk.Combobox(
+    frame_Mpath,
+    width=4,
+    textvariable=Mpath,
+    values=['RGB', 'RBG', 'GRB', 'GBR', 'BRG', 'BGR'],
+    font=Verd12,
+)
+combo_Mpath.current(0)
+combo_Mpath.pack(side=tk.LEFT)
 
 radio_randomwalk = tk.Radiobutton(
     frame_colorpath,
@@ -815,7 +834,7 @@ radio_randomwalk = tk.Radiobutton(
 label_colorpath.grid(row=0, column=0, sticky=tk.W)
 mess_colorpath.grid(row=1, column=0)
 radio_straightline.grid(row=2, column=0, sticky=tk.W)
-radio_manhattan.grid(row=3, column=0, sticky=tk.W)
+frame_Mpath.grid(row=3, column=0, sticky=tk.W)
 radio_randomwalk.grid(row=4, column=0, sticky=tk.W)
 
 
