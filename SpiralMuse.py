@@ -6,6 +6,7 @@ from tkinter.font import Font
 from tkinter import ttk
 import random
 import Straightline
+import Manhattan
 
 
 
@@ -776,13 +777,13 @@ mess_colorpath = tk.Message(
 )
 
 
-path = tk.StringVar()
+path_var = tk.StringVar()
 
 radio_straightline = tk.Radiobutton(
     frame_colorpath,
     text='Straight Line Path',
     font=Verd12,
-    variable=path,
+    variable=path_var,
     value='straightline',
     bg=bgcolor2,
     activebackground='cyan'
@@ -794,7 +795,7 @@ radio_manhattan = tk.Radiobutton(
     frame_colorpath,
     text='Manhattan Path',
     font=Verd12,
-    variable=path,
+    variable=path_var,
     value='manhattan',
     bg=bgcolor2,
     activebackground='cyan'
@@ -804,7 +805,7 @@ radio_randomwalk = tk.Radiobutton(
     frame_colorpath,
     text='Random Walk',
     font=Verd12,
-    variable=path,
+    variable=path_var,
     value='randomwalk',
     bg=bgcolor2,
     activebackground='cyan'
@@ -947,8 +948,16 @@ Degree of Rotation:  {degree_of_rot}
         turtle.Screen().clear()       # Deletes all drawings and turtles
 
     counter += 1
-    
-    Straightline.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end)
+
+    path = path_var.get()
+
+    if path == 'straightline':
+        Straightline.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end)
+    elif path == 'manhattan':
+        rgb_order = 'rgb'
+        Manhattan.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end, rgb_order)
+    else:
+        pass
 
 ### End Proceed Function #################
 
