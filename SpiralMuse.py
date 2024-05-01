@@ -973,7 +973,7 @@ Degree of Rotation:  {degree_of_rot}
     if path == 'straightline':
         Straightline.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end)
     elif path == 'manhattan':
-        rgb_order = 'rgb'
+        rgb_order = Mpath.get().lower()
         Manhattan.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end, rgb_order)
     else:
         pass
