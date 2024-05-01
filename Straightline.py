@@ -1,6 +1,4 @@
  
-
-
 def draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end):
 
 
