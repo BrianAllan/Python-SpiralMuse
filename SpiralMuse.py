@@ -919,7 +919,7 @@ def proceed_submit():
     if start_color_source.get() == 'strip':
         color_start = start_text_var.get()
         rgb_start = colors[color_start]
-        start_color_source_message = f'Start Color:  {color_start}'
+        start_color_source_message = f'Start Color:  {color_start.capitalize()}'
     else:
         start_r = start_r_var.get()
         start_g = start_g_var.get()
@@ -928,13 +928,13 @@ def proceed_submit():
                      int(start_g) if (start_g != '') else 0,
                      int(start_b) if (start_b != '') else 0)
         start_color_source_message = f'End RGB Color Values:  {rgb_start}'
-    print(rgb_start)
+    print('RGB Start: ', rgb_start)
 
     # Get rgb_end
     if end_color_source.get() == 'strip':
         color_end = end_text_var.get()
         rgb_end = colors[color_end]
-        end_color_source_message = f'End Color:  {color_end}'
+        end_color_source_message = f'End Color:  {color_end.capitalize()}'
     else:
         end_r = end_r_var.get()
         end_g = end_g_var.get()
@@ -943,33 +943,34 @@ def proceed_submit():
                    int(end_g) if (end_g != '') else 0,
                    int(end_b) if (end_b != '') else 0)
         end_color_source_message = f'End RGB Color Values:  {rgb_end}'
-    print(rgb_end)
+    print('RGB End: ', rgb_end)
+
+    # Get path
+    path = path_var.get()
 
     # Create message box
-
     mess_proceed = f'''Your Selection is...\t\t
 
 Sides:  {sides}
-Direction of Rotation:  {dir_of_rot}
+Direction of Rotation:  {dir_of_rot.capitalize()}
 Degree of Rotation:  {degree_of_rot}
 
 {start_color_source_message}
 {end_color_source_message}
+
+Color Path:  {path.capitalize()} {f'- {Mpath.get()}' if path == 'manhattan' else ''}
 '''
     box.showinfo('', mess_proceed)
 
     # Engage turtle drawing program
-
     if counter == 0:
         ### Turtle Window Setup
         turtle.setup(width=1280, height=960)
     else:                             # Skips clear on 1st iteration
         turtle.Screen().clear()       # Deletes all drawings and turtles
-
     counter += 1
 
-    path = path_var.get()
-
+    # Draw spiral
     if path == 'straightline':
         Straightline.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end)
     elif path == 'manhattan':
