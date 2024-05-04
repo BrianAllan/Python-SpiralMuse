@@ -729,6 +729,74 @@ end_b_entry.grid(row=0, column=5)
 
 
 
+
+## Random Noise Section ------------------------
+
+rand = tk.StringVar()
+
+# Random Noise text message
+randtext = (
+    'Select the amount of random '
+    'noise to add to the color evolution.  '
+    'Noise can add an organic touch to the '
+    'color evolution.'
+)
+mess_rand = tk.Message(
+    master=frame_colorselect,
+    text=randtext,
+    bg=bgcolor2,
+    width=mess_textwidth,
+    padx=5,
+    font=Verd10
+)
+
+# Create label as title
+label_rand = tk.Label(
+    frame_colorselect,
+    text='Random Noise',
+    bg=bgcolor2,
+    height=1,      # height in lines, not in pixels
+    padx=0, pady=5,
+    font=Verd14
+)
+
+
+# Create Random Noise Radio Buttons
+frame_radio_rand = tk.Frame(
+    frame_colorselect, 
+    bg=bgcolor2,
+    padx=10, pady=0,
+    borderwidth=0
+)
+radio_rand_OFF = tk.Radiobutton(
+    frame_radio_rand,
+    text='Off',
+    font=Verd12,
+    variable=rand,
+    value='F',
+    bg=bgcolor2,
+    activebackground='cyan',
+    borderwidth=0
+)
+radio_rand_ON = tk.Radiobutton(
+    frame_radio_rand,
+    text='On',
+    font=Verd12,
+    variable=rand,
+    value='T',
+    bg=bgcolor2,
+    activebackground='cyan',
+    borderwidth=0
+)
+
+radio_rand_OFF.select()
+
+radio_rand_OFF.pack(side=tk.LEFT)
+radio_rand_ON.pack(side=tk.RIGHT)
+
+
+
+
 # Placement in frame_colorselect
 label_outer_color.grid(row=4, column=0, sticky=tk.W)
 radio_end_from_strip.grid(row=5, column=0, sticky=tk.W)
@@ -736,6 +804,9 @@ end_strip_label.grid(row=5, column=1, padx=5, sticky=tk.W)
 btn_end_select.grid(row=5, column=2, padx=5)
 radio_end_from_RGB.grid(row=6, column=0, sticky=tk.W)
 frame_rgb_end.grid(row=6, column=1)
+mess_rand.grid(row=7, column=0, columnspan=3, sticky=tk.W, pady=(20,0))
+label_rand.grid(row=8, column=0, sticky=tk.W)
+frame_radio_rand.grid(row=9, column=0, sticky=tk.W)
 
 
 
