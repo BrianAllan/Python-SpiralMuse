@@ -30,12 +30,12 @@ def Manhattan(numloops, rgb_start, rgb_end, rgb_order):
 
     ### Color Evolution Initialization -----------------
 
-    mapping = {'rgb': '012',
-               'rbg': '021',
-               'grb': '102',
-               'gbr': '120',
-               'brg': '201',
-               'bgr': '210'}
+    mapping = {'RGB': '012',
+               'RBG': '021',
+               'GRB': '102',
+               'GBR': '120',
+               'BRG': '201',
+               'BGR': '210'}
 
     # Create indices for ijk space corresponding to rgb space
     i = int(mapping[rgb_order][0])
@@ -93,7 +93,8 @@ def Manhattan(numloops, rgb_start, rgb_end, rgb_order):
 ##############################################################
 #### For Testing
 
-#rgb_list = straightline(360, (0,0,0), (255, 255, 255))
-rgb_list = Manhattan(360, (0,0,0), (255, 255, 255), 'rgb')
-
-print('List length: ', len(rgb_list), '\nHead: ', rgb_list[:5], '\nTail: ', rgb_list[-5:])
+###rgb_list = straightline(360, (0,0,0), (255, 255, 255))
+##rgb_list = Manhattan(360, (0,0,0), (255, 255, 255), 'rgb')
+##
+##print('List length: ', len(rgb_list), '\nHead: ', rgb_list[:5], '\nTail: ', rgb_list[-5:])
+##

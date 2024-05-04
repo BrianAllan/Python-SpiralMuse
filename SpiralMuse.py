@@ -5,8 +5,8 @@ import tkinter.messagebox as box
 from tkinter.font import Font
 from tkinter import ttk
 import random
-import Straightline
-import Manhattan
+import Colorpaths
+import Spiral
 
 
 
@@ -947,6 +947,7 @@ def proceed_submit():
 
     # Get path
     path = path_var.get()
+    rgb_order = Mpath.get()
 
     # Create message box
     mess_proceed = f'''Your Selection is...\t\t
@@ -958,7 +959,7 @@ Degree of Rotation:  {degree_of_rot}
 {start_color_source_message}
 {end_color_source_message}
 
-Color Path:  {path.capitalize()} {f'- {Mpath.get()}' if path == 'manhattan' else ''}
+Color Path:  {path.capitalize()} {f'- {rgb_order}' if path == 'manhattan' else ''}
 '''
     box.showinfo('', mess_proceed)
 
@@ -970,14 +971,24 @@ Color Path:  {path.capitalize()} {f'- {Mpath.get()}' if path == 'manhattan' else
         turtle.Screen().clear()       # Deletes all drawings and turtles
     counter += 1
 
-    # Draw spiral
+
+    # Set numloops variable
+    numloops = 360
+
+    # Set scale variable
+    scale = 1
+
+
+    # Create rgb_list depending on chosen path
     if path == 'straightline':
-        Straightline.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end)
+        rgb_list = Colorpaths.straightline(numloops, rgb_start, rgb_end)
     elif path == 'manhattan':
-        rgb_order = Mpath.get().lower()
-        Manhattan.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, rgb_start, rgb_end, rgb_order)
+        rgb_list = Colorpaths.Manhattan(numloops, rgb_start, rgb_end, rgb_order)
     else:
         pass
+
+    # Draw spiral
+    Spiral.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, numloops, rgb_list, scale)
 
 ### End Proceed Function #################
 
