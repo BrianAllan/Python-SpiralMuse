@@ -17,8 +17,11 @@ def draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, numloops, rgb_list, sc
             t.right(360/sides + degree_of_rot)
         else:
             t.left(360/sides + degree_of_rot)
-        # width ranges from 1 to 5 for 360 loops
-        t.width((i + 90)/90)
+        # For 360 loops, width ranges from...
+        #side_width = (i + 90)/90       # 0 to 5
+        #side_width = (i + 180)/180      # 0 to 3
+        side_width = (i + 360)/360     # 0 to 2
+        t.width(side_width)
 
     # Draw half a leg to finish inside the spiral
     # to hide ending
