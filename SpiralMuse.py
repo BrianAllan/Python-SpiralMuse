@@ -4,9 +4,9 @@ import tkinter as tk
 import tkinter.messagebox as box
 from tkinter.font import Font
 from tkinter import ttk
-import random
 import Colorpaths
 import Spiral
+import RandomSelect
 
 
 
@@ -732,14 +732,18 @@ end_b_entry.grid(row=0, column=5)
 
 ## Random Noise Section ------------------------
 
-rand = tk.StringVar()
+random_noise = tk.BooleanVar()
 
 # Random Noise text message
 randtext = (
     'Select the amount of random '
     'noise to add to the color evolution.  '
-    'Noise can add an organic touch to the '
-    'color evolution.'
+    'At low levels, '
+    'noise can add an organic touch.  '
+    'At hight levels, '
+    'there is an explosion of colors, '
+    'but it can overwhelm the start-to-end '
+    'color path evolution.'
 )
 mess_rand = tk.Message(
     master=frame_colorselect,
@@ -772,8 +776,8 @@ radio_rand_OFF = tk.Radiobutton(
     frame_radio_rand,
     text='Off',
     font=Verd12,
-    variable=rand,
-    value='F',
+    variable=random_noise,
+    value=False,
     bg=bgcolor2,
     activebackground='cyan',
     borderwidth=0
@@ -782,8 +786,8 @@ radio_rand_ON = tk.Radiobutton(
     frame_radio_rand,
     text='On',
     font=Verd12,
-    variable=rand,
-    value='T',
+    variable=random_noise,
+    value=True,
     bg=bgcolor2,
     activebackground='cyan',
     borderwidth=0
@@ -794,6 +798,27 @@ radio_rand_OFF.select()
 radio_rand_OFF.pack(side=tk.LEFT)
 radio_rand_ON.pack(side=tk.RIGHT)
 
+
+# Create Noise Factor
+noise = tk.StringVar()
+
+label_noise_factor = tk.Label(
+    frame_colorselect,
+    text='Noise Factor',
+    bg=bgcolor2,
+    height=1,      # height in lines, not in pixels
+    padx=0, pady=5,
+    font=Verd14
+)
+
+combo_noise_factor = ttk.Combobox(
+    frame_colorselect,
+    width=3,
+    textvariable=noise,
+    values=['0.5', '1', '1.5', '2', '3', '4'],
+    font=Verd12,
+)
+combo_noise_factor.current(1)
 
 
 
@@ -807,6 +832,8 @@ frame_rgb_end.grid(row=6, column=1)
 mess_rand.grid(row=7, column=0, columnspan=3, sticky=tk.W, pady=(20,0))
 label_rand.grid(row=8, column=0, sticky=tk.W)
 frame_radio_rand.grid(row=9, column=0, sticky=tk.W)
+label_noise_factor.grid(row=8, column=1, sticky=tk.W)
+combo_noise_factor.grid(row=9, column=1, sticky=tk.W, padx=(20,0))
 
 
 
@@ -1016,10 +1043,12 @@ def proceed_submit():
         end_color_source_message = f'End RGB Color Values:  {rgb_end}'
     print('RGB End: ', rgb_end)
 
-    # Get path
+    # Get path and noise info
     path = path_var.get()
     rgb_order = Mpath.get()
-
+    noise_on = random_noise.get()
+    noise_factor = noise.get()
+    
     # Create message box
     mess_proceed = f'''Your Selection is...\t\t
 
@@ -1031,6 +1060,9 @@ Degree of Rotation:  {degree_of_rot}
 {end_color_source_message}
 
 Color Path:  {path.capitalize()} {f'- {rgb_order}' if path == 'manhattan' else ''}
+
+Random Noise:  {'On' if noise_on else 'Off'}
+Noise Factor:  {noise_factor}
 '''
     box.showinfo('', mess_proceed)
 
@@ -1057,6 +1089,12 @@ Color Path:  {path.capitalize()} {f'- {rgb_order}' if path == 'manhattan' else '
         rgb_list = Colorpaths.Manhattan(numloops, rgb_start, rgb_end, rgb_order)
     else:
         pass
+
+    # Add random noise if selected
+    noise_interval_size = int(float(noise_factor) * 64)
+    if noise_on:
+        rgb_list = RandomSelect.noisy_list(rgb_list, noise_interval_size)
+        
 
     # Draw spiral
     Spiral.draw_spiral(turtle, sides, dir_of_rot, degree_of_rot, numloops, rgb_list, scale)
