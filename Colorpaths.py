@@ -1,3 +1,5 @@
+import RandomFunctions
+
 
 def straightline(numloops, rgb_start, rgb_end):
 
@@ -90,11 +92,35 @@ def Manhattan(numloops, rgb_start, rgb_end, rgb_order):
 
     return rgb_list
 
+def randomwalk(numloops, rgb_start, noise_interval_size):
+    rgb = list(rgb_start)
+    print('RGB start: ', rgb)
+    rgb_list = [rgb]
+    print('Start RGB list: ', rgb_list)
+    for i in range(1, numloops):
+        new_rgb = rgb_list[-1].copy()
+        new_rgb = RandomFunctions.random_select(new_rgb, noise_interval_size)
+        rgb_list.append(new_rgb)
+
+    return rgb_list
+    
+
 ##############################################################
-#### For Testing
+#### For Testing straightline and Manhattan
 
 ###rgb_list = straightline(360, (0,0,0), (255, 255, 255))
 ##rgb_list = Manhattan(360, (0,0,0), (255, 255, 255), 'rgb')
 ##
 ##print('List length: ', len(rgb_list), '\nHead: ', rgb_list[:5], '\nTail: ', rgb_list[-5:])
 ##
+
+###########################################
+####### For Testing randomwalk
+##
+##numloops = 5
+##rgb_start = (244, 0, 100)
+##noise_interval_size = 64
+##
+##rgb_list = randomwalk(numloops, rgb_start, noise_interval_size)
+##
+##print(rgb_list)

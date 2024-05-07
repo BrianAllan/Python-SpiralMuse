@@ -6,7 +6,7 @@ from tkinter.font import Font
 from tkinter import ttk
 import Colorpaths
 import Spiral
-import RandomSelect
+import RandomFunctions
 
 
 
@@ -1044,6 +1044,7 @@ def proceed_submit():
     rgb_order = Mpath.get()
     noise_on = random_noise.get()
     noise_factor = noise.get()
+    noise_interval_size = int(float(noise_factor) * 64)
     
     # Create message box
     mess_proceed = f'''Your Selection is...\t\t
@@ -1084,12 +1085,11 @@ Noise Factor:  {noise_factor}
     elif path == 'manhattan':
         rgb_list = Colorpaths.Manhattan(numloops, rgb_start, rgb_end, rgb_order)
     else:
-        pass
+        rgb_list = Colorpaths.randomwalk(numloops, rgb_start, noise_interval_size)
 
     # Add random noise if selected
-    noise_interval_size = int(float(noise_factor) * 64)
     if noise_on:
-        rgb_list = RandomSelect.noisy_list(rgb_list, noise_interval_size)
+        rgb_list = RandomFunctions.noisy_list(rgb_list, noise_interval_size)
         
 
     # Draw spiral
