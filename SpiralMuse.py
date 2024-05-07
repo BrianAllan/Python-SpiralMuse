@@ -167,7 +167,6 @@ frame_params = tk.Frame(
 
 ## Sides Section
 
-sides = 3           # Default value
 
 # Sides text message
 sidestext = ('How many sides would you like for the base polygon? '
@@ -194,18 +193,18 @@ tk.Label(
 ).grid(row=1, column=0, sticky=tk.E)
 
 # Create Sides Combobox
-n = tk.StringVar()
+num_sides = tk.StringVar()
 
 sides_combo = ttk.Combobox(
     frame_params,
     width=2,
-    textvariable=n,
-    values=[i for i in range(3, 11)],
+    textvariable=num_sides,
+    values=[i for i in range(2, 11)],
     font=Verd12
 )
 sides_combo.grid(row=1, column=1, sticky='W')
 
-sides_combo.current(0)
+sides_combo.current(1)
 
 
 
@@ -284,18 +283,18 @@ radio_R.pack(side=tk.RIGHT)
 
 # Create Degree of Rotation Combobox
 
-deg = tk.StringVar()
+degree_rot = tk.StringVar()
 
 degree_combo = ttk.Combobox(
     frame_params,
     width=2,
-    textvariable=deg,
-    values=[i for i in range(1, 21)],
+    textvariable=degree_rot,
+    values=[i for i in range(0, 21)],
     font=Verd12
 )
 degree_combo.grid(row=6, column=1, sticky='W')
 
-degree_combo.current(0)
+degree_combo.current(1)
 
 
 
@@ -998,20 +997,17 @@ tk.Label(
 counter = 0
 
 def proceed_submit():
-    global sides
-    global dir_of_rot
-    global degree_of_rot
     global counter
     global color_start
     global color_end
 
     # Get spiral parameters
 
-    sides = int(sides_combo.get())
+    sides = int(num_sides.get())
 
     dir_of_rot = direction.get()
 
-    degree_of_rot = int(degree_combo.get())
+    degree_of_rot = int(degree_rot.get())
 
     # Get rgb_start
     if start_color_source.get() == 'strip':
