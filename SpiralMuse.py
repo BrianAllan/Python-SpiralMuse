@@ -1078,14 +1078,15 @@ Noise Factor:  {noise_factor}
     # Set scale variable
     scale = 1
 
-
     # Create rgb_list depending on chosen path
     if path == 'straightline':
         rgb_list = Colorpaths.straightline(numloops, rgb_start, rgb_end)
     elif path == 'manhattan':
         rgb_list = Colorpaths.Manhattan(numloops, rgb_start, rgb_end, rgb_order)
-    else:
+    elif path == 'randomwalk':
         rgb_list = Colorpaths.randomwalk(numloops, rgb_start, noise_interval_size)
+    else:
+        rgb_list = Colorpaths.randompath(numloops, rgb_start, rgb_end)
 
     # Add random noise if selected
     if noise_on:
