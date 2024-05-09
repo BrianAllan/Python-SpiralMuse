@@ -917,6 +917,16 @@ combo_Mpath = ttk.Combobox(
 combo_Mpath.current(0)
 combo_Mpath.pack(side=tk.LEFT)
 
+radio_randompath = tk.Radiobutton(
+    frame_colorpath,
+    text='Random Path',
+    font=Verd12,
+    variable=path_var,
+    value='randompath',
+    bg=bgcolor2,
+    activebackground='cyan'
+)
+
 radio_randomwalk = tk.Radiobutton(
     frame_colorpath,
     text='Random Walk',
@@ -927,12 +937,15 @@ radio_randomwalk = tk.Radiobutton(
     activebackground='cyan'
 )
 
+
 # Placement in frame_colorpath
 label_colorpath.grid(row=0, column=0, sticky=tk.W)
 mess_colorpath.grid(row=1, column=0)
 radio_straightline.grid(row=2, column=0, sticky=tk.W)
 frame_Mpath.grid(row=3, column=0, sticky=tk.W)
-radio_randomwalk.grid(row=4, column=0, sticky=tk.W)
+radio_randompath.grid(row=4, column=0, sticky=tk.W)
+radio_randomwalk.grid(row=5, column=0, sticky=tk.W)
+
 
 
 
@@ -1083,10 +1096,11 @@ Noise Factor:  {noise_factor}
         rgb_list = Colorpaths.straightline(numloops, rgb_start, rgb_end)
     elif path == 'manhattan':
         rgb_list = Colorpaths.Manhattan(numloops, rgb_start, rgb_end, rgb_order)
-    elif path == 'randomwalk':
-        rgb_list = Colorpaths.randomwalk(numloops, rgb_start, noise_interval_size)
-    else:
+    elif path == 'randompath':
         rgb_list = Colorpaths.randompath(numloops, rgb_start, rgb_end)
+    else:
+        rgb_list = Colorpaths.randomwalk(numloops, rgb_start, noise_interval_size)
+
 
     # Add random noise if selected
     if noise_on:
