@@ -105,13 +105,28 @@ def randomwalk(numloops, rgb_start, noise_interval_size):
 
     return rgb_list
 
-def randompath(numloops, rgb_start, rgb_end):
-    num_stopovers = 3
-    num_locations = num_stopovers + 2
-    num_legs = num_stopovers + 1
+
+def rainbowpath(numloops, rgb_locations):
+    num_locations = len(rgb_locations)
+    num_legs = num_locations - 1
 
     leg_length = numloops//num_legs
-    travel_delay = numloops%num_legs
+    travel_delay = numloops%num_legs        # Remainder loops
+    
+    # Create rgb_list
+    delay_list = [rgb_locations[0].copy()] * travel_delay   # Add remainder loops to the start
+    rgb_list = delay_list
+
+    for i in range(0, num_legs):
+        leg_list = straightline(leg_length, rgb_locations[i], rgb_locations[i+1])
+        rgb_list += leg_list.copy()
+
+    # Return rgb_list
+    return rgb_list
+
+
+def randompath(numloops, rgb_start, rgb_end):
+    num_stopovers = 3
 
     # Create list of random stopovers
     stopovers = [[0, 0, 0].copy() for i in range(num_stopovers)]
@@ -119,28 +134,17 @@ def randompath(numloops, rgb_start, rgb_end):
     for i in range(num_stopovers):
         stopovers[i] = RandomFunctions.random_select(stopovers[i], 256)
     
-
     # Create list of total locations
 
     locations = [list(rgb_start)] + stopovers + [list(rgb_end)]
 
     #print("Locations: ", locations)
 
-    # Create rgb_list
-
-    delay_list = [list(rgb_start)] * travel_delay
-
-    #print("Delay List: ", delay_list)
-
-    rgb_list = delay_list
-
-    for i in range(0, num_legs):
-        leg_list = straightline(leg_length, locations[i], locations[i+1])
-        rgb_list += leg_list.copy()
-
+    rgb_list = rainbowpath(numloops, locations)
+    
     # Return rgb_list
     return rgb_list
-        
+
     
     
 
