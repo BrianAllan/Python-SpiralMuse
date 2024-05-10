@@ -814,10 +814,10 @@ combo_noise_factor = ttk.Combobox(
     frame_colorselect,
     width=3,
     textvariable=noise,
-    values=['0.5', '1', '1.5', '2', '3', '4'],
+    values=['0.5', '1', '1.5', '2', '3', '4', '6', '8'],
     font=Verd12,
 )
-combo_noise_factor.current(1)
+combo_noise_factor.current(2)
 
 
 
@@ -1069,7 +1069,7 @@ def proceed_submit():
     rgb_order = Mpath.get()
     noise_on = random_noise.get()
     noise_factor = noise.get()
-    noise_interval_size = int(float(noise_factor) * 64)
+    noise_interval_size = int(float(noise_factor) * 32)
     
     # Create message box
     mess_proceed = f'''Your Selection is...\t\t
