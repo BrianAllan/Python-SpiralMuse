@@ -325,6 +325,29 @@ size_combo = ttk.Combobox(
 size_combo.current(0)
 
 
+# Create Scale options
+
+var_scale = tk.StringVar()
+
+label_scale = tk.Label(
+    frame_params,
+    text='Scale (Zoom)',
+    bg=bgcolor2,
+    padx=0, pady=5,
+    font=Verd14,
+)
+
+scale_combo = ttk.Combobox(
+    frame_params,
+    width=3,
+    textvariable=var_scale,
+    values=['0.5', '0.8', '1', '1.5', '2'],
+    font=Verd12
+)
+
+scale_combo.current(2)
+
+
 ### Placement in frame_params
 
 mess_sides.grid(row=0, columnspan=2)
@@ -337,6 +360,8 @@ label_degofrot.grid(row=4, column=0, sticky=tk.W)
 degree_combo.grid(row=4, column=1, sticky=tk.W)
 label_size.grid(row=5, column=0, sticky=tk.W)
 size_combo.grid(row=5, column=1, sticky=tk.W)
+label_scale.grid(row=6, column=0, sticky=tk.W)
+scale_combo.grid(row=6, column=1, sticky=tk.W)
 
 
 
@@ -1116,6 +1141,9 @@ def proceed_submit():
     # Set size numloops variable
     size_text = var_size.get()
     numloops = size_dict[size_text]
+
+    # Get scale variable
+    scale = float(var_scale.get())
     
     # Create message box
     mess_proceed = f'''Your Selection is...\t\t
@@ -1125,6 +1153,7 @@ Direction of Rotation:  {dir_of_rot.capitalize()}
 Degree of Rotation:  {degree_of_rot}
 
 Size:  {size_text}
+Scale:  {scale:.1f}
 
 {start_color_source_message}
 {end_color_source_message}
@@ -1144,8 +1173,7 @@ Noise Factor:  {noise_factor}
         turtle.Screen().clear()       # Deletes all drawings and turtles
     counter += 1
 
-    # Set scale variable
-    scale = 1
+
 
     # Create rgb_list depending on chosen path
     if path == 'straightline':
