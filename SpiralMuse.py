@@ -172,25 +172,25 @@ frame_params = tk.Frame(
 sidestext = ('How many sides would you like for the base polygon? '
                'Select a number from 3 to 10.'
 )
-tk.Message(
+mess_sides = tk.Message(
     master=frame_params,
     text=sidestext,
     bg=bgcolor2,
     width=mess_textwidth,
     padx=5,
     font=Verd10
-).grid(row=0, columnspan=2)
+)
 
 # Create Label
-tk.Label(
+label_sides = tk.Label(
     frame_params,
     text='Base Polygon Sides',
     bg=bgcolor2,
     height=1,      # height in lines, not pixels
-    padx=10,
+    padx=0,
     pady=5,
     font=Verd14
-).grid(row=1, column=0, sticky=tk.E)
+)
 
 # Create Sides Combobox
 num_sides = tk.StringVar()
@@ -202,7 +202,6 @@ sides_combo = ttk.Combobox(
     values=[i for i in range(2, 11)],
     font=Verd12
 )
-sides_combo.grid(row=1, column=1, sticky='W')
 
 sides_combo.current(1)
 
@@ -220,32 +219,32 @@ rottext = (
     'the degree of rotation, an integer '
     'number from 1 to 20.'
 )
-tk.Message(
+mess_rot = tk.Message(
     master=frame_params,
     text=rottext,
     bg=bgcolor2,
     width=mess_textwidth,
     padx=5,
     font=Verd10
-).grid(row=4, columnspan=2)
+)
 
 # Create label as title
-tk.Label(
+label_dirofrot = tk.Label(
     frame_params,
     text='Direction of Rotation',
     bg=bgcolor2,
     height=1,      # height in lines, not in pixels
-    padx=10, pady=5,
+    padx=0, pady=5,
     font=Verd14
-).grid(row=5, column=0, sticky=tk.E)
-tk.Label(
+)
+label_degofrot = tk.Label(
     frame_params,
     text='Degree of Rotation',
     bg=bgcolor2,
     height=1,      # height in lines, not in pixels
-    padx=10, pady=5,
+    padx=0, pady=5,
     font=Verd14
-).grid(row=6, column=0, sticky=tk.E)
+)
 
 
 # Create Direction of Rotation Radio Buttons
@@ -276,7 +275,7 @@ radio_R = tk.Radiobutton(
     borderwidth=0
 )
 radio_L.select()
-frame_radio.grid(row=5, column=1, sticky=tk.W)
+
 radio_L.pack(side=tk.LEFT)
 radio_R.pack(side=tk.RIGHT)
 
@@ -292,9 +291,52 @@ degree_combo = ttk.Combobox(
     values=[i for i in range(0, 21)],
     font=Verd12
 )
-degree_combo.grid(row=6, column=1, sticky='W')
+
 
 degree_combo.current(1)
+
+
+
+# Create Size options
+
+var_size = tk.StringVar()
+
+size_dict = {'Full': 360,
+             'Half': 180,
+             'Quarter': 90
+             }
+
+label_size = tk.Label(
+    frame_params,
+    text='Size (Number of Spiral Legs)',
+    bg=bgcolor2,
+    padx=0, pady=5,
+    font=Verd14
+)
+
+size_combo = ttk.Combobox(
+    frame_params,
+    width=7,
+    textvariable=var_size,
+    values=['Full', 'Half', 'Quarter'],
+    font=Verd12
+)
+
+size_combo.current(0)
+
+
+### Placement in frame_params
+
+mess_sides.grid(row=0, columnspan=2)
+label_sides.grid(row=1, column=0, sticky=tk.W)
+sides_combo.grid(row=1, column=1, sticky=tk.W)
+mess_rot.grid(row=2, columnspan=2)
+label_dirofrot.grid(row=3, column=0, sticky=tk.W)
+frame_radio.grid(row=3, column=1, sticky=tk.W)
+label_degofrot.grid(row=4, column=0, sticky=tk.W)
+degree_combo.grid(row=4, column=1, sticky=tk.W)
+label_size.grid(row=5, column=0, sticky=tk.W)
+size_combo.grid(row=5, column=1, sticky=tk.W)
 
 
 
@@ -1070,6 +1112,10 @@ def proceed_submit():
     noise_on = random_noise.get()
     noise_factor = noise.get()
     noise_interval_size = int(float(noise_factor) * 32)
+
+    # Set size numloops variable
+    size_text = var_size.get()
+    numloops = size_dict[size_text]
     
     # Create message box
     mess_proceed = f'''Your Selection is...\t\t
@@ -1077,6 +1123,8 @@ def proceed_submit():
 Sides:  {sides}
 Direction of Rotation:  {dir_of_rot.capitalize()}
 Degree of Rotation:  {degree_of_rot}
+
+Size:  {size_text}
 
 {start_color_source_message}
 {end_color_source_message}
@@ -1095,10 +1143,6 @@ Noise Factor:  {noise_factor}
     else:                             # Skips clear on 1st iteration
         turtle.Screen().clear()       # Deletes all drawings and turtles
     counter += 1
-
-
-    # Set numloops variable
-    numloops = 360
 
     # Set scale variable
     scale = 1
