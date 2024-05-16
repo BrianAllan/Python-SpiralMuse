@@ -2,6 +2,44 @@ import RandomFunctions
 
 
 def straightline(numloops, rgb_start, rgb_end):
+    '''
+    Returns a 'numloops'-long list of 3-element lists of RGB values (RGB triples)
+    in that order.  The RGB values are equally spaced (to the next lowest integer)
+    along a straight line connecting the start and end points in RGB space.
+
+    Args:
+        (int) numloops - the length of the list of RGB triples
+        (tuple or list of int) rgb_start - the starting point in RGB space
+        (tuple or list of int) rgb_end - the ending point in RGB space
+
+    Returns:
+        (list of 3-element lists of int) rgb_list
+
+    >>> numloops, rgb_start, rgb_end = 5, (0, 0, 0), (100, 100, 100)
+    >>> straightline(numloops, rgb_start, rgb_end)
+    [[0, 0, 0], [25, 25, 25], [50, 50, 50], [75, 75, 75], [100, 100, 100]]
+
+    >>> numloops, rgb_start, rgb_end = 5, (0, 0, 0), (100, 0, 0)
+    >>> straightline(numloops, rgb_start, rgb_end)
+    [[0, 0, 0], [25, 0, 0], [50, 0, 0], [75, 0, 0], [100, 0, 0]]
+
+    >>> numloops, rgb_start, rgb_end = 5, (0, 0, 0), (0, 100, 0)
+    >>> straightline(numloops, rgb_start, rgb_end)
+    [[0, 0, 0], [0, 25, 0], [0, 50, 0], [0, 75, 0], [0, 100, 0]]
+
+    >>> numloops, rgb_start, rgb_end = 5, (0, 0, 0), (0, 0, 100)
+    >>> straightline(numloops, rgb_start, rgb_end)
+    [[0, 0, 0], [0, 0, 25], [0, 0, 50], [0, 0, 75], [0, 0, 100]]
+
+    >>> numloops, rgb_start, rgb_end = 4, (0, 0, 0), (1, 1, 1)
+    >>> straightline(numloops, rgb_start, rgb_end)
+    [[0, 0, 0], [0, 0, 0], [0, 0, 0], [1, 1, 1]]
+
+    >>> numloops, rgb_start, rgb_end = 4, (0, 0, 0), (0, 0, 0)
+    >>> straightline(numloops, rgb_start, rgb_end)
+    [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    
+    '''
 
     x = [0,0,0]  # Intialize the rgb vector
 
@@ -12,7 +50,7 @@ def straightline(numloops, rgb_start, rgb_end):
     Ginterval = (end_g - g)/(numloops - 1)
     Binterval = (end_b - b)/(numloops - 1)
 
-    #print('RGB Intervals', Rinterval, Ginterval, Binterval)
+    #print('RGB Intervals: ', Rinterval, Ginterval, Binterval)
 
     rgb_list = [ [r, g, b] ]
 
@@ -145,6 +183,15 @@ def randompath(numloops, rgb_start, rgb_end):
     # Return rgb_list
     return rgb_list
 
+
+
+###################
+### For Testing ###
+###################
+
+if __name__ == '__main__':
+    import doctest
+    doctest.testmod()
     
     
 
