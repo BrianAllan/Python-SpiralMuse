@@ -105,15 +105,15 @@ tk.Label(
 description1 = (
     'Generate colored spiral designs (against a black background) '
     'starting with a base polygonal shape (triangle, square, '
-    'pentagon, etc.) and a base color. The base polygonal shape '
-    'is specified by the number of sides (3, 4, 5,...up to 10).'
+    'pentagon, etc.). The base polygonal shape '
+    'is specified by the number of sides (2, 3, 4,...up to 10).'
 )
 mess_descript1 = tk.Message(
     master=frame_descript,
     text=description1,
     bg=bgcolor2,
     width=580,
-    padx=5,
+    padx=0,
     font=Verd10
 )
 mess_descript1.grid(row=1, columnspan=2)
@@ -130,15 +130,15 @@ tk.Label(
 
 # Create 2nd part of description
 description2 = (
-    'The color can be allowed to DRIFT away from the base '
-    'color as the spiral twists and expands outward, '
-    'creating an unfolding effect. '
-    'This can be set using an integer number '
-    'from 2 to 8, where 2 represents a lot of drift and 8 '
-    'represents only a little. Think of this number as the degree '
-    'of color STABILITY, the opposite of DRIFT. '
-    'Regardless, a little amount of random variation is automatically '
-    'added to the color, creating an organic look. '
+    'Spirals are made by alternating between drawing a line segment and turning, '
+    'where after each turn the line segment gets a little longer.  How much '
+    'to turn depends upon the number of sides of the base polygonal shape '
+    '-- i.e., base rotation (360/sides) -- as well as any added rotation. '
+    'Without any added rotation, one obtains a telescoping drawing of '
+    'the base polygonal shape. '
+    'The size of the drawing is determined by the number of line segments, '
+    'i.e., \"legs\", that are drawn as well as a general scale factor which '
+    'acts like a \"zoom\" function.'
 )
 mess_descript2 = tk.Message(
     master=frame_descript,
@@ -149,6 +149,33 @@ mess_descript2 = tk.Message(
     font=Verd10
 )
 mess_descript2.grid(row=2, column=1)
+
+# Create 3rd part of description
+description3 = (
+    'A triple of Red, Green, and Blue values determines a color, '
+    'where each value is given by an integer number between 0 and 255. '
+    'The color of each leg is determined by such an RGB triple. '
+    'Hence, the colors of the spiral as it evolves from inside to out '
+    'are determined by a list of RGB triples. '
+    'A list of RGB triples can be conceived of as a path through '
+    'a 3-dimensional RGB space, where RGB space is represented by a '
+    'cube with sides of 255. '
+    'Between any 2 colors, i.e., points in RGB space, there can be '
+    'multiple color paths. '
+    'On top of a selected color path, one can add random noise. '
+    'A little noise makes the colors \"jump\" around a little bit '
+    'from their specified path. '
+    'A lot of noise makes the colors \"jump\" around a lot.'
+)
+mess_descript3 = tk.Message(
+    master=frame_descript,
+    text=description3,
+    bg=bgcolor2,
+    width=580,
+    padx=0,
+    font=Verd10
+)
+mess_descript3.grid(row=3, columnspan=2)
 
 
 
@@ -170,7 +197,7 @@ frame_params = tk.Frame(
 
 # Sides text message
 sidestext = ('How many sides would you like for the base polygon? '
-               'Select a number from 3 to 10.'
+               'Select an integer from 2 to 10.'
 )
 mess_sides = tk.Message(
     master=frame_params,
@@ -1114,7 +1141,7 @@ def proceed_submit():
                      int(start_g) if (start_g != '') else 0,
                      int(start_b) if (start_b != '') else 0)
         start_color_source_message = f'End RGB Color Values:  {rgb_start}'
-    print('RGB Start: ', rgb_start)
+    #print('RGB Start: ', rgb_start)
 
     # Get rgb_end
     if end_color_source.get() == 'strip':
@@ -1129,7 +1156,7 @@ def proceed_submit():
                    int(end_g) if (end_g != '') else 0,
                    int(end_b) if (end_b != '') else 0)
         end_color_source_message = f'End RGB Color Values:  {rgb_end}'
-    print('RGB End: ', rgb_end)
+    #print('RGB End: ', rgb_end)
 
     # Get path and noise info
     path = path_var.get()
