@@ -68,6 +68,69 @@ def straightline(numloops, rgb_start, rgb_end):
 
 
 def Manhattan(numloops, rgb_start, rgb_end, rgb_order):
+    '''
+    Returns a 'numloops'-long list of 3-element lists of RGB values (RGB triples)
+    in that order.  The RGB values are equally spaced (to the next lowest integer)
+    along a path that closes the distance in RGB space between the start and end
+    points by following a "Manhattan" path, a path that proceeds along one dimension,
+    then another, and then the remaining one.  The order of the dimensions is
+    determined by the 'rgb_order'.
+
+    Args:
+        (int) numloops - the length of the list of RGB triples
+        (tuple or list of int) rgb_start - the starting point in RGB space
+        (tuple or list of int) rgb_end - the ending point in RGB space
+        (str) rgb_order - the order of the dimesions for the path through RGB space
+
+    Returns:
+        (list of 3-element lists of int) rgb_list
+
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 5, (0, 0, 0), (100, 0, 0), 'RGB'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [25, 0, 0], [50, 0, 0], [75, 0, 0], [100, 0, 0]]
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 5, (0, 0, 0), (0, 100, 0), 'RGB'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [0, 25, 0], [0, 50, 0], [0, 75, 0], [0, 100, 0]]
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 5, (0, 0, 0), (0, 0, 100), 'RGB'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [0, 0, 25], [0, 0, 50], [0, 0, 75], [0, 0, 100]]
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 5, (0, 0, 0), (100, 0, 0), 'BGR'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [25, 0, 0], [50, 0, 0], [75, 0, 0], [100, 0, 0]]
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 4, (0, 0, 0), (100, 100, 100), 'RGB'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [100, 0, 0], [100, 100, 0], [100, 100, 100]]
+    
+    >>> numloops, rgb_start, rgb_end, rgb_order = 4, (0, 0, 0), (100, 100, 100), 'RBG'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [100, 0, 0], [100, 0, 100], [100, 100, 100]]
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 4, (0, 0, 0), (100, 100, 100), 'GRB'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [0, 100, 0], [100, 100, 0], [100, 100, 100]]
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 4, (0, 0, 0), (100, 100, 100), 'GBR'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [0, 100, 0], [0, 100, 100], [100, 100, 100]]
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 4, (0, 0, 0), (100, 100, 100), 'BRG'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [0, 0, 100], [100, 0, 100], [100, 100, 100]]
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 4, (0, 0, 0), (100, 100, 100), 'BGR'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [0, 0, 100], [0, 100, 100], [100, 100, 100]]
+
+    >>> numloops, rgb_start, rgb_end, rgb_order = 5, (0, 0, 0), (100, 100, 100), 'RGB'
+    >>> Manhattan(numloops, rgb_start, rgb_end, rgb_order)
+    [[0, 0, 0], [75, 0, 0], [100, 50, 0], [100, 100, 25], [100, 100, 100]]
+
+    '''
 
     ### Color Evolution Initialization -----------------
 
@@ -87,7 +150,8 @@ def Manhattan(numloops, rgb_start, rgb_end, rgb_order):
     r, g, b = x[0], x[1], x[2] = rgb_start
     # Create corresponding ijk vectors
     # for i, j, k ordered path through rgb space
-    z = [x[i], x[j], x[k]]     
+    z = [x[i], x[j], x[k]]
+    ijk_start = [rgb_start[i], rgb_start[j], rgb_start[k]]
     ijk_end = [rgb_end[i], rgb_end[j], rgb_end[k]]
 
     # Calculate Manhattan distance (Mdist) through RGB color space
@@ -97,29 +161,34 @@ def Manhattan(numloops, rgb_start, rgb_end, rgb_order):
             abs(rgb_end[1] - g) + 
             abs(rgb_end[2] - b)
             )
-    print(f'Mdist is: {Mdist}')
-    Minterval = Mdist/numloops
-    print(f'Minterval is: {Minterval}')
+    #print(f'Mdist is: {Mdist}')
+    Minterval = Mdist/(numloops - 1)
+    #print(f'Minterval is: {Minterval}')
 
 
     rgb_list = [ [r, g, b] ]
 
+    sign = lambda x: -1 if x<0 else 1
+
+    sign_0 = sign(ijk_end[0] - ijk_start[0])
+    sign_1 = sign(ijk_end[1] - ijk_start[1])
+    sign_2 = sign(ijk_end[2] - ijk_start[2])
+    dist_0 = abs(ijk_end[0] - ijk_start[0])
+    dist_1 = abs(ijk_end[1] - ijk_start[1])
+    dist_2 = abs(ijk_end[2] - ijk_start[2])
+
     for m in range(1, numloops):
-        # Evolve the ijk vector --> z
-        if z[0] - ijk_end[0] > Minterval/2:
-            z[0] -= Minterval
-        elif ijk_end[0] - z[0] > Minterval/2:
-            z[0] += Minterval
-        elif z[1] - ijk_end[1] > Minterval/2:
-            z[1] -= Minterval
-        elif ijk_end[1] - z[1] > Minterval/2:
-            z[1] += Minterval
-        elif z[2] - ijk_end[2] > Minterval/2:
-            z[2] -= Minterval
-        elif ijk_end[2] - z[2] > Minterval/2:
-            z[2] += Minterval
+        dist_traveled = m * Minterval
+
+        if dist_traveled <= dist_0:
+            z[0] = ijk_start[0] + sign_0 * dist_traveled
+        elif dist_0 < dist_traveled <= (dist_0 + dist_1):
+            z[0] = ijk_end[0]
+            z[1] = ijk_start[1] + sign_1 * (dist_traveled - dist_0)
         else:
-            pass
+            z[0] = ijk_end[0]
+            z[1] = ijk_end[1]
+            z[2] = ijk_start[2] + sign_2 * (dist_traveled - dist_0 - dist_1)
 
         # Update the rgb vector --> x
         x[i], x[j], x[k] = z[0], z[1], z[2]
@@ -192,16 +261,6 @@ def randompath(numloops, rgb_start, rgb_end):
 if __name__ == '__main__':
     import doctest
     doctest.testmod()
-    
-    
-
-##############################################################
-#### For Testing straightline and Manhattan
-
-##rgb_list = straightline(10, (0,0,0), (50, 50, 50))
-##rgb_list = Manhattan(360, (0,0,0), (255, 255, 255), 'rgb')
-
-##print('List length: ', len(rgb_list), '\nHead: ', rgb_list[:5], '\nTail: ', rgb_list[-5:])
 
 
 ###########################################
